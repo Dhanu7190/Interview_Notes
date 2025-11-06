@@ -1,0 +1,409 @@
+What is Angular and how is it different from AngularJS?
+
+Angular is a TypeScript-based front-end framework developed by Google for building dynamic single-page applications (SPAs). It follows a component-based architecture, making applications more modular, testable, and scalable.
+
+AngularJS, on the other hand, was the first version of the framework built using JavaScript and based on the MVC (Model-View-Controller) pattern.
+
+Performance: Angular is faster because of Ahead-of-Time (AOT) compilation and efficient change detection.
+
+Mobile Support: Angular is built with mobile support in mind, unlike AngularJS.
+
+_________________________________________________________________________________________________________________________________________________________________________________________________________________
+
+What is a Component?
+
+A Component in Angular is the building block of the user interface (UI).
+
+It controls a specific portion of the screen — known as a view — and contains both the logic and the template (HTML) for that section.
+
+Each component in Angular is a TypeScript class that interacts with the HTML template to define how data is displayed and how the app responds to user actions.
+
+Components help make the application modular, maintainable, and reusable.
+
+_________________________________________________________________________________________________________________________________________________________________________________________________________________
+
+What is a Module in Angular?
+
+A Module in Angular is a container that groups together related components, directives, pipes, and services into a cohesive block of functionality.
+
+It helps organize the application into logical sections, making the app more scalable, maintainable, and modular.
+
+Every Angular application must have at least one module, known as the root module.
+
+Each module is defined using the @NgModule decorator, which provides metadata about the module such as what it declares, imports, and exports.
+
+_________________________________________________________________________________________________________________________________________________________________________________________________________________
+
+Difference Between Template-Driven and Reactive Forms in Angular
+
+In Angular, forms are used to handle user input, validation, and data binding.
+
+There are two main approaches — Template-driven forms and Reactive forms — both achieving the same goal but with different implementation styles.
+
+1. Template-Driven Forms
+
+Definition:
+
+Template-driven forms are driven by the template (HTML). Most of the form logic is defined using Angular directives in the HTML.
+
+Characteristics:
+
+Simpler and easier to use for small forms.
+
+Uses two-way data binding with [(ngModel)].
+
+Angular automatically creates the FormControl instances.
+
+Suitable for simple scenarios like contact or login forms.
+
+2. Reactive Forms
+
+Definition:
+
+Reactive forms are driven by the component (TypeScript). The form model and validation logic are defined programmatically in the component class.
+
+Characteristics:
+
+More scalable, predictable, and testable.
+
+Uses explicit data flow with reactive programming principles.
+
+Form controls are created using FormGroup and FormControl.
+
+Ideal for complex forms with dynamic validation or conditional logic.
+
+_________________________________________________________________________________________________________________________________________________________________________________________________________________
+
+Data Binding in Angular
+
+Data binding in Angular is the process that connects the component’s data (TypeScript class) with the template (HTML view).
+
+It allows communication between the component (logic) and the DOM (UI) — either from component to view, from view to component, or both ways.
+
+Angular provides four main types of data binding:
+
+1. Interpolation ({{ }})
+
+Direction: Component → View
+
+Purpose: To display dynamic data from the component in the HTML template.
+
+2. Property Binding ([ ])
+
+Direction: Component → View
+
+Purpose: To bind HTML element or directive properties to component variables.
+
+3. Event Binding (( ))
+
+Direction: View → Component
+
+Purpose: To handle user actions (like clicks, input, or key presses) and call component methods.
+
+4. Two-Way Binding ([( )])
+
+Direction: Component ↔ View and View ↔ Component
+
+Purpose: To keep data in sync between the component and the view — when one changes, the other updates automatically.
+
+Uses ngModel from FormsModule.
+
+_________________________________________________________________________________________________________________________________________________________________________________________________________________
+
+What is Dependency Injection (DI) in Angular?
+
+Dependency Injection (DI) is a design pattern used in Angular to create and manage dependencies (like services or classes) efficiently.
+
+In simple terms — instead of a component creating its own dependencies, Angular injects them automatically, which makes the code more modular, reusable, and testable.
+
+Angular has a built-in DI framework, meaning you can easily define how dependencies are provided and shared across the app.
+
+Why is Dependency Injection Useful?
+
+Improves Reusability
+
+The same service can be injected into multiple components without recreating it.
+
+Enhances Testability
+
+Dependencies can be easily mocked or replaced during unit testing.
+
+Better Maintainability
+
+Components don’t depend on concrete classes; they depend on abstractions, making the system more flexible.
+
+Singleton Behavior
+
+Angular ensures one instance of the dependency (if provided in root) is shared across the app, optimizing memory usage.
+
+Loose Coupling
+
+Components and services remain independent, reducing interdependency and making the code cleaner.
+
+_________________________________________________________________________________________________________________________________________________________________________________________________________________
+
+Difference Between constructor() and ngOnInit() in Angular
+
+Both constructor and ngOnInit() are part of a component’s lifecycle, but they serve different purposes and are executed at different stages of component creation.
+
+1. constructor()
+
+Definition:
+
+constructor is a TypeScript feature — not specific to Angular.
+
+It is called when the component class is instantiated (i.e., when Angular creates the component object).
+
+Purpose:
+
+Used for dependency injection (to receive injected services).
+
+Used for basic initialization that doesn’t depend on bindings or DOM elements.
+
+2. ngOnInit()
+
+Definition:
+
+ngOnInit() is an Angular lifecycle hook that belongs to the OnInit interface.
+
+It runs after the component is initialized and after Angular has set all input properties.
+
+Purpose:
+
+Ideal for initializing component data.
+
+Commonly used to fetch data from APIs or services.
+
+Ensures that inputs are available and ready to use.
+
+_________________________________________________________________________________________________________________________________________________________________________________________________________________
+
+Lifecycle Hooks in Angular
+
+In Angular, every component has a lifecycle — from creation to destruction.
+
+Lifecycle hooks are special methods that allow developers to tap into key moments of this process, such as initialization, change detection, and cleanup.
+
+These hooks help manage component behavior, data flow, and resource cleanup efficiently.
+
+List of Major Lifecycle Hooks (in order of execution)
+
+Hook													Purpose
+
+ngOnChanges()				Called before ngOnInit() and whenever an input property changes. Used to respond to changes in @Input() values.
+
+ngOnInit()					Called once after the first ngOnChanges(). Ideal for initialization logic like fetching data from APIs.
+
+ngDoCheck()					Called during every change detection cycle. Used to detect and act upon changes that Angular doesn’t catch automatically.
+
+ngAfterContentInit()		Called once after content projection (<ng-content>) has been initialized.
+
+ngAfterContentChecked()		Called after Angular checks the projected content. Runs after every change detection cycle.
+
+ngAfterViewInit()			Called once after the component’s view (and child views) are initialized. Commonly used with @ViewChild.
+
+ngAfterViewChecked()		Called after Angular checks the component’s views and child views.
+
+ngOnDestroy()				Called just before the component is destroyed. Used for cleanup (like unsubscribing from Observables, removing event listeners).
+
+_________________________________________________________________________________________________________________________________________________________________________________________________________________
+
+What are Directives in Angular?
+
+Directives in Angular are special instructions in the DOM that change the appearance or behavior of elements, components, or other directives.
+
+In simpler terms, directives help Angular manipulate the DOM — by adding, removing, or modifying elements dynamically based on logic.
+
+Every Angular application uses directives extensively (for example, *ngIf, *ngFor, [(ngModel)], etc.).
+
+1. Structural Directives
+
+Purpose:
+
+Structural directives change the DOM structure by adding or removing elements.
+
+Syntax:
+
+Always prefixed with an asterisk (*) because they modify the HTML structure.
+
+2. Attribute Directives
+
+Purpose:
+
+Attribute directives change the appearance or behavior of an existing DOM element, component, or directive — without adding or removing elements.
+
+Syntax:
+
+Used like regular HTML attributes, usually enclosed in square brackets [ ].
+
+3. Component Directives
+
+Definition:
+
+Technically, every Angular component is also a directive with a template.
+
+It’s a special type of directive that controls a view.
+
+_________________________________________________________________________________________________________________________________________________________________________________________________________________
+
+What are Pipes in Angular?
+
+Pipes in Angular are used to transform data before displaying it in the view (HTML).
+
+They take in a value, process it, and return a formatted output — without changing the actual data in the component.
+
+Pipes are especially useful for tasks like formatting dates, numbers, strings, and more — directly in the template.
+
+You apply a pipe using the pipe symbol (|) in your HTML.
+
+_________________________________________________________________________________________________________________________________________________________________________________________________________________
+
+Difference between pure and impure pipes?
+
+In Angular, pipes are used to transform data in templates.
+
+They can be classified into pure and impure based on how frequently they execute and when they detect changes in data.
+
+1. Pure Pipes
+
+Definition:
+
+A pure pipe is executed only when the input value changes (by reference).
+
+It does not re-run if the input data changes internally (e.g., an array element changes but the reference remains the same).
+
+Default behavior:
+
+All Angular pipes are pure by default.
+
+Performance:
+
+Very efficient, as Angular calls them only when necessary (during change detection).
+
+Use case:
+
+Best for stateless transformations — e.g., formatting text, numbers, or dates.
+
+2. Impure Pipes
+
+Definition:
+
+An impure pipe runs on every change detection cycle, regardless of whether the input value changes or not.
+
+This means it can detect changes within arrays, objects, or collections.
+
+Performance:
+
+Less efficient because it executes frequently, even for minor changes.
+
+Use case:
+
+Useful for dynamic or mutable data, like arrays that frequently update or filter results.
+
+_________________________________________________________________________________________________________________________________________________________________________________________________________________
+
+What is Angular Router?
+
+The Angular Router is a built-in module that enables navigation between different views or components within a Single Page Application (SPA) — without reloading the entire page.
+
+It allows developers to define routes (URLs) that map to specific components, making the application behave like a multi-page app while still running on a single HTML page.
+
+Why Do We Need Angular Router?
+
+In a traditional web application, navigating to a new page causes the browser to reload and fetch a new HTML document.
+
+But in Angular (SPA), we need navigation without full page reloads — and that’s where the Angular Router comes in.
+
+It provides:
+
+Seamless navigation between components.
+
+Dynamic URL handling.
+
+Better user experience through faster transitions.
+
+Support for parameters, guards, lazy loading, and nested routes.
+
+How It Works
+
+Routes are defined as path-component mappings in a routing module (usually app-routing.module.ts).
+
+The router listens to URL changes and renders the corresponding component dynamically in the <router-outlet>.
+
+_________________________________________________________________________________________________________________________________________________________________________________________________________________
+
+What is Lazy Loading in Angular?
+
+Lazy Loading in Angular is a technique used to load feature modules only when they are needed, rather than loading everything at application startup.
+
+It helps improve application performance by reducing the initial bundle size — the browser downloads only the essential code at first, and loads other parts on demand (when the user navigates to them).
+
+In contrast, Eager Loading loads all modules upfront, which can slow down the initial page load, especially in large applications.
+
+Why Use Lazy Loading?
+
+Faster Initial Load Time –
+
+Only necessary modules are loaded initially, making the app start faster.
+
+Optimized Performance –
+
+Reduces memory usage and bandwidth consumption by loading modules as needed.
+
+Better User Experience –
+
+Users don’t have to wait for all features to download before interacting with the app.
+
+Efficient Code Splitting –
+
+Angular’s router automatically splits the app into smaller chunks.
+
+_________________________________________________________________________________________________________________________________________________________________________________________________________________
+
+What are Route Guards in Angular?
+
+Route Guards in Angular are interfaces that control navigation — they decide whether a user can access or leave a specific route.
+
+They act as gatekeepers for your routes, helping implement features like authentication, authorization, unsaved changes warnings, and pre-loading data before navigation.
+
+Route Guards return a boolean (true / false) or an Observable/Promise resolving to a boolean, which determines whether the navigation is allowed or not.
+
+Guard			Purpose
+
+CanActivate		Checks if a route can be activated (access control).
+
+CanDeactivate	Checks if a route can be left (unsaved changes warning).
+
+Resolve			Pre-fetches data before activating a route.
+
+CanLoad			Prevents lazy-loaded modules from loading until conditions are met.
+
+_________________________________________________________________________________________________________________________________________________________________________________________________________________
+
+Difference Between routerLink and navigate() in Angular
+
+In Angular, both routerLink and navigate() are used for routing and navigation,
+
+but they are used in different contexts — one in templates (HTML) and the other in TypeScript (component logic).
+
+1. routerLink
+
+Type: Template directive (used in HTML).
+
+Purpose: Used for declarative navigation — when you want to create clickable links in the template.
+
+Usage: Commonly used inside anchor (<a>) or button elements.
+
+2. navigate()
+
+Type: Method (used in TypeScript).
+
+Purpose: Used for programmatic navigation — when you want to navigate based on logic or user actions (like button clicks or conditions).
+
+Usage: Invoked using Angular’s Router service.
+
+_________________________________________________________________________________________________________________________________________________________________________________________________________________
+
+
+
+
