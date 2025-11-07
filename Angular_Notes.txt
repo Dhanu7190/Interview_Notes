@@ -404,6 +404,981 @@ Usage: Invoked using Angular’s Router service.
 
 _________________________________________________________________________________________________________________________________________________________________________________________________________________
 
+What is a Service in Angular?
+
+A Service in Angular is a reusable class that contains business logic, data, or functionality that can be shared across multiple components.
+
+Services help keep components clean and focused on the UI, while the logic (like API calls, data processing, or utility functions) is handled separately.
+
+They promote code reusability, separation of concerns, and maintainability.
+
+ng generate service user   or   	ng g s user
 
 
+user.service.ts
 
+user.service.spec.ts
+
+_________________________________________________________________________________________________________________________________________________________________________________________________________________
+
+
+Difference Between navigate() and navigateByUrl()
+
+Both methods belong to the Angular Router and are used for programmatic navigation, but they differ slightly in how they handle URLs.
+
+Aspect	               				navigate()	 																			navigateByUrl()
+
+Definition					Used for navigation by building the URL from an array of route segments.		Used for navigation by passing the full URL as a string.
+
+Parameters					Accepts an array of path segments and optional navigation extras.				Accepts a single string representing the complete URL.
+
+When to Use					When you need relative navigation or parameters.								When you already know the absolute path or a full URL.
+
+Example Usage				this.router.navigate(['user', id]);												this.router.navigateByUrl('/user/5');
+
+Supports Route Parameters	✅ Yes																			✅ Yes, but must be included manually in the URL
+
+Supports Relative Paths		✅ Yes ({ relativeTo: this.route })												❌ No (always absolute)
+
+_________________________________________________________________________________________________________________________________________________________________________________________________________________
+
+Providing a Service in Angular — providedIn vs providers Array
+
+Services in Angular can be provided in different ways, which determines their scope and lifetime.
+
+1. Using providedIn (Recommended)
+
+Defined inside the @Injectable() decorator.
+
+Automatically registers the service with the root injector (singleton across the app).
+
+Angular’s tree-shaking removes it from the final bundle if unused.
+
+2. Using providers Array
+
+You can also provide a service:
+
+In a module → Service is available to all components in that module.
+
+In a component → Service instance is unique to that component and its children.
+
+_________________________________________________________________________________________________________________________________________________________________________________________________________________
+
+How Does HttpClient Work in Angular?
+
+The HttpClient in Angular is a built-in service (from the @angular/common/http package) used to make HTTP requests to RESTful APIs.
+
+It allows your Angular application to communicate with backend servers — to send or receive data — using HTTP methods like GET, POST, PUT, DELETE, etc.
+
+It’s based on Observables, provided by RxJS, which makes it powerful for handling asynchronous operations, like fetching or updating data from an API.
+
+_________________________________________________________________________________________________________________________________________________________________________________________________________________
+
+What Are HTTP Interceptors in Angular?
+
+HTTP Interceptors in Angular are special classes that can inspect, modify, or handle HTTP requests and responses before they reach the server or application.
+
+They are part of Angular’s HttpClient module and are used for cross-cutting concerns like:
+
+Attaching authentication tokens,
+
+Logging network requests,
+
+Handling global errors,
+
+Modifying response data.
+
+They work like a middleware that sits between the application and the server.
+
+Difference Between Request and Response Interceptors
+
+Aspect							Request 																	Interceptor	Response Interceptor
+
+Purpose					Modifies or handles outgoing requests before they are sent to the server.			Modifies or handles incoming responses before they reach the application
+
+						Add authentication tokens (JWT) to headers.											Handle global HTTP errors.
+
+Typical Use Cases		Add custom headers (e.g., Content-Type, Accept).									Transform or format response data.
+						
+ 						Log outgoing requests.																Log responses or retry failed requests.					
+ 																											
+When It Executes		Before the request leaves the client.												After the server sends back a response.
+
+Return Type				HttpRequest (modified or cloned)													HttpResponse (modified, handled, or passed through)
+
+_________________________________________________________________________________________________________________________________________________________________________________________________________________
+
+How Do You Handle Errors in HttpClient (Using RxJS catchError)?
+
+In Angular, when you make HTTP requests using HttpClient, errors can occur due to:
+
+Network issues
+
+Server failures (like 500 Internal Server Error)
+
+Invalid URLs
+
+Unauthorized access (401/403 errors), etc.
+
+To handle these errors gracefully, Angular provides the catchError operator from RxJS, which allows you to catch and handle errors in an observable stream.
+
+_________________________________________________________________________________________________________________________________________________________________________________________________________________
+
+What are Angular Interceptors?
+
+An HTTP Interceptor in Angular is a special service that can intercept and modify HTTP requests and responses made using the HttpClient module.
+
+Think of it like a middleware that sits between your Angular app and the server — it can log requests, attach authentication tokens, handle global errors, or modify response data before it reaches your components.
+
+_________________________________________________________________________________________________________________________________________________________________________________________________________________
+
+What is an Observable in Angular?
+
+An Observable is a core concept from RxJS (Reactive Extensions for JavaScript) that represents a stream of asynchronous data that can be observed over time.
+
+It allows you to subscribe to data changes, react to new values, handle errors, and even cancel ongoing operations.
+
+Observables are heavily used in Angular — especially in HttpClient, Forms, and Event handling — because they make it easier to manage asynchronous and reactive programming.
+
+Key Concepts:
+
+An Observable can emit multiple values over time (unlike a Promise, which resolves once).
+
+You can subscribe to start listening and unsubscribe to stop listening (important to prevent memory leaks).
+
+Observables can be combined, filtered, or transformed using RxJS operators like map, filter, mergeMap, catchError, etc.
+
+Difference Between Observable and Promise
+
+Feature						Observable																		Promise
+
+Emits						Multiple values over time												Single value once
+
+Lazy vs Eager				Lazy — runs only when subscribed										Eager — runs immediately when created
+
+Cancelable					✅ Yes — you can unsubscribe											❌ No — cannot cancel once started
+
+Operators					Supports powerful RxJS operators (map, filter, retry, etc.)				No built-in operators
+
+Error Handling				Built-in with .subscribe()												Handled with .catch()
+
+Usage in Angular			HttpClient, Reactive Forms, Event streams								Simple async operations like fetching one-time data
+
+_________________________________________________________________________________________________________________________________________________________________________________________________________________
+
+What are async and await in JavaScript (and Angular)?
+
+1. async Keyword
+
+Declares a function as asynchronous.
+
+Automatically returns a Promise, even if you return a regular value.
+
+Inside an async function, you can use await.
+
+2. await Keyword
+
+Can only be used inside an async function.
+
+Pauses the function execution until the Promise is resolved or rejected.
+
+Makes asynchronous code look sequential (like synchronous code).
+
+3. Key Differences Between async and await
+
+Feature								async																				await
+
+Purpose						Declares a function as asynchronous												Waits for a Promise to resolve/reject
+
+Used With					Functions																		Inside async functions
+
+Return Type					Always returns a Promise														Returns the resolved value of a Promise
+
+Execution Behavior			Makes function asynchronous														Pauses execution until the Promise resolves
+
+Error Handling				Works with try/catch inside async function										Used within async to handle async errors cleanly
+
+_________________________________________________________________________________________________________________________________________________________________________________________________________________
+
+Hot vs Cold Observables in Angular (and RxJS)
+
+In RxJS, Observables can be classified as Cold or Hot depending on when the data starts being produced and how subscribers receive it.
+
+This distinction is important because it affects when data emission begins, whether subscribers share data, and how multicasting works in Angular apps (like with HTTP calls or event streams).
+
+1. Cold Observables
+
+Definition:
+
+A Cold Observable is one that starts producing data only when a subscriber subscribes.
+
+Each subscriber gets its own independent stream of data.
+
+Key Point:
+
+The data source is created per subscription — like a private copy for every observer.
+
+Common Examples:
+
+HttpClient calls in Angular (this.http.get())
+
+of(), from(), range() from RxJS
+
+2. Hot Observables
+
+Definition:
+
+A Hot Observable starts producing data immediately, even before anyone subscribes.
+
+Subscribers share the same data stream and receive only what’s emitted after they subscribe.
+
+Key Point:
+
+The data source is independent of subscriptions — like a shared broadcast.
+
+Common Examples:
+
+DOM events (fromEvent(document, 'click'))
+
+WebSocket streams
+
+Subjects (new Subject()), or share() operators
+
+_________________________________________________________________________________________________________________________________________________________________________________________________________________
+
+Common RxJS Operators Used in Angular
+
+RxJS (Reactive Extensions for JavaScript) provides operators to transform, filter, combine, and manage observable streams.
+
+They help control how data flows and how asynchronous tasks like API calls are handled.
+
+1. map() — Transform Data
+
+Purpose:
+
+Transforms each emitted value from an observable into a new value.
+
+Similar to JavaScript’s Array.map(), but for streams.
+
+2. switchMap() — Switch to a New Observable
+
+Purpose:
+
+Cancels the previous observable and switches to a new one when a new value is emitted.
+
+Commonly used for HTTP calls where only the latest request should be processed.
+
+3. mergeMap() — Flatten and Merge Streams
+
+Purpose:
+
+Flattens and subscribes to multiple inner observables simultaneously.
+
+Unlike switchMap, it does not cancel previous subscriptions.
+
+4. filter() — Filter Emitted Values
+
+Purpose:
+
+Filters out emitted values that don’t meet a condition (predicate).
+
+Only passes through values that satisfy the condition.
+
+5. tap() — Side Effects (without modifying the stream)
+
+Purpose:
+
+Executes a side effect (like logging or debugging) for each emitted value — without altering the observable data.
+
+6. forkJoin() — Combine Multiple Observables
+
+Purpose:
+
+Executes multiple observables in parallel and emits the final combined result only when all complete.
+
+Similar to Promise.all() but for observables.
+_________________________________________________________________________________________________________________________________________________________________________________________________________________
+
+What is a Subject in RxJS?
+
+A Subject in RxJS is a special type of Observable that allows multicasting — meaning it can emit values to multiple subscribers at once.
+
+Unlike a regular Observable (which is unicast and creates a new stream for each subscriber), a Subject acts as both an Observable and an Observer — it can emit values and also be subscribed to.
+
+Key Points about Subject:
+
+It is both producer and consumer of data.
+
+It does not hold any previous value — new subscribers only receive future emissions.
+
+It is useful for manually pushing values (e.g., from user interactions or event streams).
+
+Commonly used for cross-component communication in Angular.
+
+What is a BehaviorSubject in RxJS?
+
+A BehaviorSubject is a special type of Subject that:
+
+Always stores the latest value it emitted.
+
+Requires an initial value when created.
+
+Replays the last emitted value immediately to new subscribers.
+
+This makes it ideal for maintaining and sharing current state across components — e.g., the current user, theme, or login status.
+
+Key Differences Between Subject and BehaviorSubject
+
+Feature							Subject																	BehaviorSubject
+
+Initial Value				❌ Not required															✅ Must have an initial value
+
+Stores Last Value			❌ No																	✅ Yes
+
+New Subscribers				Receive only future values												Receive the latest emitted value immediately
+
+Use Case					Event emitters, notifications											State management, maintaining current data
+
+Example Usage in Angular	Sending data between components											Sharing current user info, theme, or app state
+
+_________________________________________________________________________________________________________________________________________________________________________________________________________________
+
+What is State Management in Angular?
+
+State management refers to the way an application stores, tracks, and updates data (state) that is shared across multiple components.
+
+In a complex Angular app, you might have data like:
+
+Logged-in user info
+
+Shopping cart items
+
+UI states (loading, theme, etc.)
+
+API responses
+
+Without proper state management, data becomes hard to synchronize — leading to inconsistent UI, duplicate logic, and unpredictable behavior.
+
+Types of State Management in Angular
+
+Local State (Component-level)
+
+Managed using component properties and services.
+
+Example: @Input(), @Output(), or using a shared BehaviorSubject in a service.
+
+Global State (App-level)
+
+Managed using a state management library like NgRx, Akita, or NGXS.
+
+Used when multiple modules or components need to share and update the same state.
+
+What is NgRx?
+
+NgRx (Angular Reactive Extensions) is a state management library built around the Redux pattern — it uses actions, reducers, and selectors to manage state in a predictable, reactive way.
+
+It is based on RxJS Observables, making it ideal for Angular’s reactive programming model.
+
+Core Building Blocks of NgRx
+
+Concept					Purpose
+
+Store				Holds the application state (a single source of truth).
+
+Action				Describes what happened (e.g., LOGIN_SUCCESS, LOAD_USERS).
+
+Reducer				Pure function that defines how state changes based on an action.
+
+Selector			Retrieves specific pieces of state from the store.
+
+Effect				Handles side effects like API calls asynchronously.
+
+_________________________________________________________________________________________________________________________________________________________________________________________________________________
+
+How do you improve performance in Angular?
+
+1) Optimize Change Detection
+
+Use OnPush so Angular checks a component only when its inputs change (by reference), an event fires inside it, or you call markForCheck.
+
+2) Template & DOM Efficiency
+
+trackBy with *ngFor to prevent DOM re-renders:
+
+3) RxJS & Data Flow
+
+Use async pipe instead of manual subscribe() to auto-unsubscribe and reduce leaks.
+
+4) Routing & Loading Strategy
+
+Lazy load feature modules and standalone components:
+
+5) Build & Bundle Optimization
+
+Build for production (AOT, optimizations, minification):
+
+_________________________________________________________________________________________________________________________________________________________________________________________________________________
+
+What is Change Detection in Angular?
+
+Change Detection in Angular is the process by which the framework checks and updates the DOM whenever the data in your components changes.
+
+How Change Detection Works
+
+Angular runs change detection automatically when:
+
+Component input properties change
+
+An event (like a click or keypress) occurs
+
+An async operation (like an HTTP call or Promise) completes
+
+A timer (setTimeout, setInterval) finishes
+
+Change Detection Strategies
+
+Angular provides two strategies:
+
+Default (CheckAlways)
+
+OnPush
+
+1. Default Strategy (CheckAlways)
+
+This is the default behavior in Angular.
+
+Angular runs change detection for every component in the component tree whenever any change occurs.
+
+Even if a component’s data didn’t actually change, Angular still checks it.
+
+2. OnPush Strategy
+
+Tells Angular to skip checking the component unless certain conditions are met.
+
+The component is only checked when:
+
+One of its @Input() properties changes (by reference).
+
+An event is triggered inside the component (e.g., button click).
+
+You manually mark it for check using ChangeDetectorRef.markForCheck().
+
+_________________________________________________________________________________________________________________________________________________________________________________________________________________
+
+What is trackBy in *ngFor and Why Do We Use It?
+
+The trackBy function in Angular’s *ngFor directive is used to improve rendering performance when looping over lists of data.
+
+By default, Angular uses object identity comparison to detect which items have changed, added, or removed.
+
+When the data changes, Angular destroys and recreates all DOM elements — even if most of the data is the same.
+
+This can lead to unnecessary re-rendering, especially for large lists.
+
+How trackBy Works
+
+trackBy tells Angular how to uniquely identify each item in a list, using a unique key (usually an ID).
+
+With this, Angular can reuse existing DOM elements instead of recreating them every time the data changes.
+
+_________________________________________________________________________________________________________________________________________________________________________________________________________________
+
+Lazy Loading vs Preloading in Angular
+
+Both Lazy Loading and Preloading are routing strategies in Angular used to control how and when feature modules are loaded — which directly affects application startup time and performance.
+
+1️. Lazy Loading
+
+Definition:
+
+Lazy Loading means loading feature modules only when they are needed — i.e., when the user navigates to a specific route for the first time.
+
+Purpose:
+
+To reduce initial bundle size and speed up application startup by deferring loading of non-critical modules.
+
+How It Works:
+
+The feature module is loaded on demand via the loadChildren property in routing.
+
+2️. Preloading
+
+Definition:
+
+Preloading means loading lazy-loaded modules in the background after the main app has loaded.
+
+Purpose:
+
+To improve subsequent navigation speed by preemptively loading modules without blocking the initial load.
+
+How It Works:
+
+You still mark modules for lazy loading using loadChildren,
+
+but Angular preloads them asynchronously using a preloading strategy.
+
+_________________________________________________________________________________________________________________________________________________________________________________________________________________
+
+Difference Between FormControl and FormGroup in Angular
+
+In Angular’s Reactive Forms, both FormControl and FormGroup are classes from the @angular/forms package.
+
+They are used together to build and manage form data, validation, and state in a structured, reactive way.
+
+Key Differences Table
+
+Feature							FormControl																		FormGroup
+
+Purpose						Tracks a single form field														Tracks a group of form fields
+
+Data Type					Single value (string, number, boolean)											Object containing multiple key-value pairs
+
+Validation					Applied to individual control													Can apply group-level validation
+
+Example Use					One input like “email”															Entire form like “Login Form”
+
+Composition					Leaf node in form tree															Parent node (container of controls)
+
+Access Syntax				control.value																	formGroup.get('controlName').value
+
+_________________________________________________________________________________________________________________________________________________________________________________________________________________
+
+How Do You Add Form Validation in Angular?
+
+In Angular (especially with Reactive Forms), validation is handled using the Validators class from @angular/forms.
+
+You can apply validation rules either built-in (like required, minLength, email, etc.) or custom (your own logic).
+
+1️. Built-in Validators
+
+Angular provides several ready-made validators that can be directly applied to FormControl or FormGroup.
+
+2. Custom Validators
+
+When built-in validators aren’t enough, you can create your own validation functions — called custom validators.
+
+A custom validator is just a function that:
+
+Takes a FormControl (or FormGroup),
+
+Returns either:
+
+null → ✅ valid, or
+
+{ 'errorName': true } → ❌ invalid.
+
+3. Async Validators (Optional)
+
+For server-side or asynchronous checks (like checking if an email is already taken)
+
+_________________________________________________________________________________________________________________________________________________________________________________________________________________
+
+What is Form Patching in Angular?
+
+In Angular Reactive Forms, you can update form values dynamically using:
+
+setValue()
+
+patchValue()
+
+Both are methods available on FormControl, FormGroup, and FormArray,
+
+but they differ in how strictly they expect the structure of the form data.
+
+1️. setValue()
+
+Definition:
+
+Updates all controls in a FormGroup (or a single control in a FormControl).
+
+It requires an exact match between the form model structure and the object passed.
+
+If any form control is missing or extra, Angular will throw an error.
+
+✅ Use it when you want to update the entire form and ensure data completeness.
+
+patchValue()
+
+Definition:
+
+Updates specific controls in a FormGroup, FormArray, or FormControl.
+
+It doesn’t require all fields to be present in the provided object.
+
+✅ Use it when updating only part of the form (e.g., updating user profile name or email only).
+
+_________________________________________________________________________________________________________________________________________________________________________________________________________________
+
+Difference Between Development Build and Production Build in Angular
+
+										Key Differences Summary Table
+										
+Aspect						Development Build					Production Build
+
+Command					ng serve / ng build				ng build --configuration production
+
+Optimization			No								Yes (minification, tree-shaking, bundling)
+
+Debugging Support		Full (source maps, logs)		Minimal (for performance)
+
+Performance				Slower app, larger size			Fast app, small size
+
+File Size				Large							Compressed
+
+Error Messages			Detailed						Minimized / hidden
+
+Runtime Checks			Enabled							Disabled
+
+Environment File Used	environment.ts					environment.prod.ts
+
+Build Time				Fast							Slightly slower (optimization step)
+
+_________________________________________________________________________________________________________________________________________________________________________________________________________________
+
+What is Angular CLI?
+
+The Angular CLI (Command Line Interface) is a powerful command-line tool provided by Angular to create, build, test, and deploy Angular applications efficiently.
+
+It automates repetitive setup and configuration tasks — allowing developers to focus more on coding and less on manual setup.
+
+Common Angular CLI Commands
+
+Here’s a list of commonly used CLI commands with explanations 👇
+
+Command													Purpose
+
+ng new <project-name>								Creates a new Angular project
+
+ng serve											Builds and serves the application locally on localhost:4200
+
+ng build											Compiles the app into an output folder (dist/) for deployment
+
+ng build --configuration 							production	Creates an optimized production build
+
+ng generate component <name> or ng g c <name>		Generates a new component
+
+ng generate service <name> or ng g s <name>			Generates a new service
+
+ng generate module <name> or ng g m <name>			Generates a new module
+
+ng generate directive <name> or ng g d <name>		Creates a new directive
+
+ng generate pipe <name> or ng g p <name>			Creates a new custom pipe
+
+ng test												Runs unit tests using Karma
+
+ng e2e												Runs end-to-end (E2E) tests using Protractor
+
+ng lint												Runs code linting to check for style or syntax errors
+
+ng add <library>									Installs and configures a third-party library (e.g., ng add @angular/material)
+
+ng update											Updates Angular or its dependencies to the latest compatible versions
+
+ng version											Displays the Angular CLI and framework version information
+
+ng doc <keyword>									Opens the official Angular documentation for that keyword in a browser
+
+_________________________________________________________________________________________________________________________________________________________________________________________________________________
+
+What is environment.ts in Angular?
+
+The environment.ts file in Angular is used to store environment-specific configuration values, such as API URLs, feature flags, or app modes (development, staging, production, etc.).
+
+It helps you separate configuration from code, so you don’t hardcode values like API endpoints or secrets directly inside your components or services.
+
+_________________________________________________________________________________________________________________________________________________________________________________________________________________
+
+
+What is Angular Compilation?
+
+Angular applications are written in TypeScript + HTML templates.
+
+Before the browser can run the app, this code must be compiled into JavaScript that the browser understands.
+
+Angular offers two ways to do this compilation:
+
+🧩 Just-in-Time (JIT) Compilation — at runtime (in the browser)
+
+⚡ Ahead-of-Time (AOT) Compilation — at build time (before deployment)
+
+1. Just-in-Time (JIT) Compilation
+
+Definition:
+
+In JIT compilation, Angular compiles the app in the browser at runtime — that is, when the app is loaded.
+
+How It Works:
+
+The browser downloads your Angular app’s source files (components, templates, etc.).
+
+Angular’s compiler (@angular/compiler) runs inside the browser and compiles your templates into executable JavaScript on the fly.
+
+2️. Ahead-of-Time (AOT) Compilation
+
+Definition:
+
+In AOT compilation, Angular compiles the app at build time (before it ever reaches the browser).
+
+So, when users open the app, they get ready-to-run JavaScript — no need for the browser to compile anything.
+
+How It Works:
+
+The Angular compiler (ngc) runs during the build process.
+
+It converts HTML templates and TypeScript into efficient JavaScript ahead of time.
+
+The compiled code is shipped to the browser directly.
+
+
+_________________________________________________________________________________________________________________________________________________________________________________________________________________
+
+How do you share data between two components?
+
+Input/Output
+
+Service with Subject
+
+Router params
+
+Quick When-to-Use Guide
+
+Parent ⇄ Child: @Input/@Output (simple, direct)
+
+Siblings / Distant components: Shared Service + (Behavior)Subject
+
+Bookmark/share state: Router params (path or query)
+
+Bonus: For complex global state (auth, cart, feature data) and time-travel/debugging, use NgRx/NGXS/Akita; for localized component state, NgRx Component Store is great.
+
+_________________________________________________________________________________________________________________________________________________________________________________________________________________
+
+What is debounceTime() & Where Used
+
+An RxJS operator that waits for a pause in emitted values before passing the latest one.
+
+Used to limit API calls in search boxes or auto-suggests.
+
+_________________________________________________________________________________________________________________________________________________________________________________________________________________
+
+How to Unsubscribe from Observables & Why
+
+Use:
+
+unsubscribe() in ngOnDestroy()
+
+or takeUntil()
+
+or async pipe in template.
+
+Why: Prevent memory leaks and avoid multiple subscriptions after component destruction.
+
+_________________________________________________________________________________________________________________________________________________________________________________________________________________
+
+Call API on Component Load (only once)
+
+Use the ngOnInit() lifecycle hook.
+
+_________________________________________________________________________________________________________________________________________________________________________________________________________________
+
+How do you deploy an Angular application?
+
+Build production bundle: ng build --configuration production (outputs to dist/)
+
+Host the static files (HTML/JS/CSS/assets) on:
+
+Static hosts: Netlify, Vercel, GitHub Pages, Firebase Hosting, S3+CloudFront, Nginx/Apache
+
+Configure SPA fallback (rewrite /* → /index.html) for client-side routing.
+
+_________________________________________________________________________________________________________________________________________________________________________________________________________________
+
+What is versioning and why do we use package-lock.json?
+
+Versioning: Locks library versions to ensure consistent installs across machines/CI.
+
+package-lock.json: Records exact dependency tree (versions & integrity) for reproducible builds and faster installs.
+
+_________________________________________________________________________________________________________________________________________________________________________________________________________________
+
+What is ng build --prod?
+
+Legacy alias for production build (now ng build --configuration production).
+
+Enables AOT, optimization/minification, tree-shaking, file hashing, and env file replacement.
+
+_________________________________________________________________________________________________________________________________________________________________________________________________________________
+
+How do you handle API environment configs (dev/stage/prod)?
+
+Use files under src/environments/:
+
+environment.ts (dev), environment.staging.ts, environment.prod.ts
+
+Import environment in services and read environment.apiUrl.
+
+Configure angular.json fileReplacements and build with:
+
+ng build --configuration development|staging|production
+
+_________________________________________________________________________________________________________________________________________________________________________________________________________________
+
+What are Angular Decorators?
+
+Decorators in Angular are special TypeScript functions that add metadata to classes, methods, properties, or parameters.
+
+They tell Angular how to process or use that piece of code (like marking a class as a component or service).
+
+Decorator   		Purpose
+
+@Component			Defines a UI component
+
+@NgModule			Defines an Angular module
+
+@Injectable			Marks a class for dependency injection
+
+@Input				Receives data from parent component
+
+@Output				Sends data/events to parent component
+
+_________________________________________________________________________________________________________________________________________________________________________________________________________________
+
+What is ngDoCheck() used for?
+
+ngDoCheck() is used to perform manual or custom change detection logic beyond Angular’s default mechanism, especially for deep or mutable object changes.
+
+_________________________________________________________________________________________________________________________________________________________________________________________________________________
+
+What’s the difference between ngAfterViewInit and ngAfterContentInit?
+
+Difference Between ngAfterViewInit and ngAfterContentInit
+
+Both are Angular lifecycle hooks, but they trigger at different stages in the component’s rendering process.
+
+Hook						When It Runs												What It’s For												Common Use Case
+
+ngAfterContentInit()		After content projection (using <ng-content>) 				Runs once after external content is 				Used in components that use content
+							
+							is inserted into the component								projected into the component	 					projection to access projected elements
+
+ngAfterViewInit()			After the component’s own view (template + child 			Runs once after component’s view and  				Used to access child components/elements
+				
+							components) has been fully initialized	 					child views are ready	 							via @ViewChild or @ViewChildren
+							
+_________________________________________________________________________________________________________________________________________________________________________________________________________________
+
+What is @ViewChild and @ContentChild in Angular?
+
+Both are decorators used to access elements or components from your template 
+
+but they work in different contexts of the component.
+
+1. @ViewChild
+
+Used to access elements, directives, or child components that are part of the component’s own view (template).
+
+The element must be declared inside the component’s template, not projected.
+
+2. @ContentChild
+
+Used to access projected content that comes from a parent component via <ng-content>.
+
+It retrieves references from content projected into this component, not from its own template.
+
+_________________________________________________________________________________________________________________________________________________________________________________________________________________
+
+What is ChangeDetectorRef in Angular?
+
+ChangeDetectorRef is a service from Angular’s @angular/core package that gives you fine-grained control over change detection — it lets you manually trigger, pause, or resume Angular’s automatic view updates.
+
+Real-World Example
+
+A chat application receiving high-frequency messages — you might detach change detection and update manually for better performance.
+
+A third-party SDK (like Google Maps) or WebSocket updates data outside Angular’s zone — you use detectChanges() to refresh the UI.
+
+_________________________________________________________________________________________________________________________________________________________________________________________________________________
+
+What is a Provider in Angular?
+
+A provider in Angular tells the Dependency Injection (DI) system how to create or supply a dependency (like a service).
+
+When you inject a service into a component or another service using the constructor
+
+What are Provider Scopes?
+
+The provider scope determines how long the service instance lives and where it’s available in the app.
+
+Scope					Where Provided								Instance Lifetime											Use Case
+
+'root'					App-wide									One per application									Shared/global services
+
+'platform'				Across all Angular apps						One per platform									Multi-app pages
+
+'any'					Lazy modules/components						One per module/tree									Isolated services
+
+Component-level			Inside providers array						New instance per component							Localized state/service
+
+_________________________________________________________________________________________________________________________________________________________________________________________________________________
+
+Difference Between Providing a Service in root vs in NgModule
+
+Both ways register a service provider, but the scope and lifetime of the service instance differ.
+
+Provided In			Scope					Instances								Tree-shakable			Use Case
+
+'root'				App-wide				Single									✅ Yes					Shared/global services
+
+NgModule.providers	Module-level			One per module (new for lazy modules)	❌ No 					Module-specific services
+
+_________________________________________________________________________________________________________________________________________________________________________________________________________________
+
+What is the Purpose of the Injector Class in Angular?
+
+The Injector class in Angular is the core part of the Dependency Injection system.
+
+It is responsible for creating, storing, and delivering service instances (dependencies) whenever a component, directive, or another service requests them.
+
+_________________________________________________________________________________________________________________________________________________________________________________________________________________
+
+How do you pass data between routes (e.g., via query params, route params, or state)?
+
+You can pass data between routes using:
+
+Route Params → For required path values (e.g., IDs)
+
+Query Params → For optional URL-based filters
+
+Navigation State → For temporary, non-URL data
+
+Route Data → For static configuration info
+
+_________________________________________________________________________________________________________________________________________________________________________________________________________________
+
+Purpose of RouterModule.forRoot() vs RouterModule.forChild()
+
+Both methods are used to configure Angular routes, but they are meant for different levels of your app:
+
+RouterModule.forRoot() — App-Level Routing
+
+Used once in the root module (AppModule).
+
+Registers global routes and sets up the Angular Router service for the entire application.
+
+Should only be called once in the whole app.
+
+RouterModule.forChild() — Feature Module Routing
+
+Used inside feature modules (like UserModule, AdminModule, etc.).
+
+Defines child routes specific to that module.
+
+Does not create a new Router instance — it reuses the one from forRoot().
+
+_________________________________________________________________________________________________________________________________________________________________________________________________________________
+
+What Are Signals in Angular?
+
+Signals are a new reactivity model introduced in Angular 16 to make state management simpler, predictable, and more efficient.
+
+They represent a reactive value — when that value changes, Angular automatically knows what parts of the UI depend on it and updates them.
