@@ -22,6 +22,50 @@ Components help make the application modular, maintainable, and reusable.
 
 _________________________________________________________________________________________________________________________________________________________________________________________________________________
 
+What are Templates in Angular?
+
+A template in Angular is the HTML view of a component.
+
+It defines how the UI looks and what should be displayed to the user.
+
+Templates also allow Angular-specific features like:
+
+Data binding
+
+Interpolation
+
+Directives (*ngIf, *ngFor)
+
+Event binding
+
+Pipes
+
+Basically, template = HTML + Angular features.
+
+_________________________________________________________________________________________________________________________________________________________________________________________________________________
+
+What is Metadata in Angular?
+
+Metadata is the information (configuration) that we pass inside decorators
+
+so Angular knows how to use that class.
+
+_________________________________________________________________________________________________________________________________________________________________________________________________________________
+
+What are Decorators in Angular?
+
+A decorator is a special TypeScript feature (a function) that adds extra behavior or metadata to a class, method, property, or parameter.
+
+Angular uses decorators to understand:
+
+What is a component?
+
+What is a service?
+
+What is a module?
+
+_________________________________________________________________________________________________________________________________________________________________________________________________________________
+
 What is a Module in Angular?
 
 A Module in Angular is a container that groups together related components, directives, pipes, and services into a cohesive block of functionality.
@@ -302,6 +346,28 @@ Useful for dynamic or mutable data, like arrays that frequently update or filter
 
 _________________________________________________________________________________________________________________________________________________________________________________________________________________
 
+What are Built-in Pipes in Angular?
+
+Built-in pipes are the pipes that Angular provides out-of-the-box to transform data directly in templates.
+
+Pipes help you format data like:
+
+Dates
+
+Numbers
+
+Currency
+
+Percent
+
+Text case
+
+JSON
+
+You use them with the | pipe operator.
+
+_________________________________________________________________________________________________________________________________________________________________________________________________________________
+
 What is Angular Router?
 
 The Angular Router is a built-in module that enables navigation between different views or components within a Single Page Application (SPA) — without reloading the entire page.
@@ -548,6 +614,27 @@ You can subscribe to start listening and unsubscribe to stop listening (importan
 
 Observables can be combined, filtered, or transformed using RxJS operators like map, filter, mergeMap, catchError, etc.
 
+_________________________________________________________________________________________________________________________________________________________________________________________________________________
+
+What is an Observer in Angular (RxJS)?
+
+An Observer is an object that listens to an Observable.
+
+It defines what to do when:
+
+A new value is emitted → next()
+
+An error occurs → error()
+
+The observable completes → complete()
+
+In simple words:
+
+✔ Observable = "Someone who sends data"
+
+✔ Observer = "Someone who receives data"
+
+_________________________________________________________________________________________________________________________________________________________________________________________________________________
 Difference Between Observable and Promise
 
 Feature						Observable																		Promise
@@ -743,6 +830,38 @@ Example Usage in Angular	Sending data between components											Sharing curre
 
 _________________________________________________________________________________________________________________________________________________________________________________________________________________
 
+What is ReplaySubject in Angular (RxJS)?
+
+A ReplaySubject is a special type of Subject that remembers previous values and sends them to any new subscriber.
+
+In simple words:
+
+✔ ReplaySubject = Subject + Memory
+
+✔ It can replay old values to new subscribers
+
+✔ You decide how many past values to store (buffer size)
+
+⭐ Why do we use ReplaySubject?
+
+Because sometimes new subscribers should not miss old data.
+
+Example use cases:
+
+Chat messages
+
+Notifications
+
+Logs
+
+Stored API responses
+
+Multi-step forms (remember previous steps)
+
+Whenever you want new subscribers to receive past emitted values
+
+_________________________________________________________________________________________________________________________________________________________________________________________________________________
+
 What is State Management in Angular?
 
 State management refers to the way an application stores, tracks, and updates data (state) that is shared across multiple components.
@@ -817,6 +936,7 @@ Lazy load feature modules and standalone components:
 
 Build for production (AOT, optimizations, minification):
 
+optimize API calls with caching/pagination, and use things like Angular Universal or service workers when needed.
 _________________________________________________________________________________________________________________________________________________________________________________________________________________
 
 What is Change Detection in Angular?
@@ -997,7 +1117,7 @@ If any form control is missing or extra, Angular will throw an error.
 
 ✅ Use it when you want to update the entire form and ensure data completeness.
 
-patchValue()
+2. patchValue()
 
 Definition:
 
@@ -1129,7 +1249,6 @@ The Angular compiler (ngc) runs during the build process.
 It converts HTML templates and TypeScript into efficient JavaScript ahead of time.
 
 The compiled code is shipped to the browser directly.
-
 
 _________________________________________________________________________________________________________________________________________________________________________________________________________________
 
@@ -1355,6 +1474,209 @@ Route Data → For static configuration info
 
 _________________________________________________________________________________________________________________________________________________________________________________________________________________
 
+What is SharedModule in Angular?
+
+SharedModule is a custom module that you create to store common components, directives, pipes, and reusable Angular modules so they can be used across multiple feature modules.
+
+It helps avoid duplication and makes the project clean and maintainable.
+
+⭐ Why is SharedModule used? (Purpose)
+
+✅ 1. To reuse common components across the app
+
+Example:
+
+HeaderComponent
+
+FooterComponent
+
+SidebarComponent
+
+LoaderComponent
+
+AlertComponent
+
+Instead of declaring them in every module, you put them in SharedModule.
+
+✅ 2. To avoid repeating CommonModule, FormsModule, etc.
+
+Almost every module uses:
+
+CommonModule
+
+FormsModule
+
+ReactiveFormsModule
+
+Material Modules
+
+You import them once in SharedModule and export them.
+
+✅ 3. To keep the application structure clean
+
+Instead of cluttering every feature module with the same imports, all reusable things stay in one place.
+
+_________________________________________________________________________________________________________________________________________________________________________________________________________________
+
+What is CommonModule in Angular?
+
+CommonModule is an Angular module that provides common directives, pipes, and features needed in every feature module, such as:
+
+*ngIf
+
+*ngFor
+
+ngSwitch
+
+Common pipes (date, currency, uppercase, etc.)
+
+It is used in feature modules, not in the root module.
+
+_________________________________________________________________________________________________________________________________________________________________________________________________________________
+
+What is AppModule in Angular?
+
+AppModule is the root module of an Angular application.
+
+It is the main entry point where Angular starts the application and loads all the necessary components, services, and modules.
+
+In short:
+
+✔ AppModule = Main container
+
+✔ It tells Angular what the application contains
+
+✔ And which component should run first (AppComponent)
+_________________________________________________________________________________________________________________________________________________________________________________________________________________
+
+What is the purpose of NgModule in Angular?
+
+NgModule is a decorator that turns a class into an Angular module.
+
+Its main purpose is to organize an application into logical blocks.
+
+In simple words:
+
+✔ NgModule = A container
+
+That groups together:
+
+Components
+
+Directives
+
+Pipes
+
+Services
+
+Other modules
+
+So Angular knows what your app contains and how everything is connected.
+
+_________________________________________________________________________________________________________________________________________________________________________________________________________________
+
+What is BrowserModule in Angular?
+
+BrowserModule is a built-in Angular module that is required to run Angular applications in the browser.
+
+It is imported only once — in the root module (AppModule).
+
+⭐ Why do we need BrowserModule? (Purpose)
+
+BrowserModule provides the essential features needed for Angular to work in a browser:
+
+✔ 1. Supports rendering (DOM support)
+
+It includes services needed to render your Angular components into the browser DOM.
+
+✔ 2. Includes CommonModule features
+
+It brings commonly used directives:
+
+*ngIf
+
+*ngFor
+
+ngSwitch
+
+Pipes like date, currency, etc.
+
+✔ 3. Enables Change Detection
+
+It provides features like ChangeDetectorRef, zone.js integration, etc.
+
+✔ 4. Bootstrapping the AppComponent
+
+Required to start and load the root component in a browser.
+
+_________________________________________________________________________________________________________________________________________________________________________________________________________________
+
+What is CoreModule in Angular?
+
+CoreModule is a custom Angular module that contains singleton services, global components, and application-level features that should be loaded only once — when the app starts.
+
+It is typically imported only in AppModule, never in feature modules.
+
+⭐ Why do we use CoreModule? (Purpose)
+
+✅ 1. To store global singleton services
+
+Examples:
+
+AuthService
+
+ApiService
+
+LoggerService
+
+UserService
+
+ConfigService
+
+These should exist once in the whole app.
+
+CoreModule guarantees this.
+
+✅ 2. Prevent duplicate service instances
+
+If services are put in SharedModule, and SharedModule is imported everywhere → multiple instances are created.
+
+Putting them in CoreModule prevents this problem.
+
+✅ 3. Store global components
+
+Like layout components used only once:
+
+Navbar
+
+Header
+
+Footer
+
+Sidebar
+
+NotFoundPage
+
+These should not be repeatedly declared in feature modules → so they belong in CoreModule.
+
+✅ 4. Keep AppModule clean
+
+CoreModule organizes all global things so AppModule stays simple.
+
+_________________________________________________________________________________________________________________________________________________________________________________________________________________
+
+CoreModule vs SharedModule (Very Important)
+
+| Topic                      | CoreModule                            | SharedModule                           |
+| -------------------------- | ------------------------------------- | -------------------------------------- |
+| Contains                   | Singleton services, global components | Reusable components, directives, pipes |
+| Loaded                     | Only once                             | Many times                             |
+| Import Location            | Only AppModule                        | Every feature module                   |
+| Should contain services?   | ✔ Yes                                 | ❌ No                                 |
+| Should contain components? | Only global ones                      | Reusable ones                          |
+
+_________________________________________________________________________________________________________________________________________________________________________________________________________________
+
 Purpose of RouterModule.forRoot() vs RouterModule.forChild()
 
 Both methods are used to configure Angular routes, but they are meant for different levels of your app:
@@ -1382,3 +1704,1025 @@ What Are Signals in Angular?
 Signals are a new reactivity model introduced in Angular 16 to make state management simpler, predictable, and more efficient.
 
 They represent a reactive value — when that value changes, Angular automatically knows what parts of the UI depend on it and updates them.
+
+_________________________________________________________________________________________________________________________________________________________________________________________________________________
+
+what is the latest version of angular? List new features in latest angular version?
+
+As of today (November 2025) ✅ the latest stable version of Angular is:
+
+🚀 Angular 21
+
+Released: November 2025
+
+Signal-Based Routing (Major Change)
+
+Improved Control Flow (Final & Optimized)
+
+New template syntax:
+
+✅ @if
+
+✅ @for
+
+✅ @switch
+
+Better Performance with Signals
+
+Standalone is Default
+
+_________________________________________________________________________________________________________________________________________________________________________________________________________________
+
+What is the entry point in an angular application?
+
+The entry point of an Angular application is main.ts.
+
+This file is responsible for bootstrapping the application, meaning it starts Angular by loading the root component (usually AppComponent) using bootstrapApplication() or bootstrapModule() in older versions.
+
+index.html is the first file loaded by the browser, but Angular execution actually begins from main.ts.
+
+_________________________________________________________________________________________________________________________________________________________________________________________________________________
+
+what is the use of angular.json and package.json
+
+angular.json is used to configure and manage the Angular project build and workspace settings, such as applications, build options, assets, styles, scripts, and environments.
+
+package.json is used to manage the project's dependencies, scripts, and metadata through npm.
+
+In simple terms, angular.json controls how the Angular app runs and builds, while package.json controls what libraries the project uses.
+
+_________________________________________________________________________________________________________________________________________________________________________________________________________________
+
+How to add style sheets in an angular application?
+
+In Angular, we can add styles in two main ways:
+
+✅ globally using styles.css or by configuring the styles array in angular.json, and
+
+✅ locally at the component level using styleUrls or styles inside the component decorator.
+
+Global styles apply to the whole application, while component styles apply only to that component.
+
+_________________________________________________________________________________________________________________________________________________________________________________________________________________
+
+How to create a custom pipes?
+
+We can create a custom pipe in Angular using the @Pipe decorator and implementing the PipeTransform interface.
+
+A pipe must have a transform() method where we write the logic to format or transform the data.
+
+After creating it, we register it in a module or use it as a standalone pipe and then use it in the template with the pipe (|) symbol.
+
+_________________________________________________________________________________________________________________________________________________________________________________________________________________
+
+Explain two way data binding in detail ?
+
+Two-way data binding in Angular means the UI and the component stay in sync automatically.
+
+If the user updates the UI, the component value changes, and if the component value changes, the UI updates.
+
+How it Works?
+
+Two-way binding is basically a combination of:
+
+✅ Property Binding [ ] (TS → HTML)
+
+✅ Event Binding ( ) (HTML → TS)
+
+Known as:
+
+👉 Banana in a Box syntax
+
+Internal Working (Very Important for Interview)
+
+Angular converts this:
+
+<input [(ngModel)]="message">
+
+<input [ngModel]="message" (ngModelChange)="message=$event">
+
+So:
+
+✔ [ngModel] → sends data to UI
+
+✔ (ngModelChange) → sends data back to component
+
+_________________________________________________________________________________________________________________________________________________________________________________________________________________
+
+What is a Service Worker?
+
+A Service Worker is a background script that runs in the browser separately from the web page and can handle tasks like caching, offline support, push notifications, 
+
+and network requests without requiring the page to be open.
+
+xample Scenario
+
+You open a food delivery app (like Swiggy/Zomato PWA)
+
+1️. First time with internet:
+
+Service worker downloads and caches:
+
+HTML
+
+CSS
+
+JS
+
+Images
+
+Recently viewed restaurants
+
+2. Internet goes OFF
+
+Still you can:
+
+✅ Open the app
+
+✅ See previously loaded restaurants
+
+✅ View menu items
+
+✅ Navigate between pages
+
+Why?
+
+👉 The service worker serves data from cache instead of the server
+
+_________________________________________________________________________________________________________________________________________________________________________________________________________________
+
+what are modules?
+
+In Angular, a module is a container that groups related components, directives, pipes, and services together.
+
+It helps organize the application and tells Angular how different parts of the app fit and work together.
+
+_________________________________________________________________________________________________________________________________________________________________________________________________________________
+
+what is eager and lazy loading modules?
+
+Eager loading means modules are loaded immediately when the application starts, even if the user never visits that feature.
+
+Lazy loading means modules are loaded only when the user navigates to that route.
+
+_________________________________________________________________________________________________________________________________________________________________________________________________________________
+
+How to prevent anauthorized access in an angular application?
+
+We prevent unauthorized access in an Angular application mainly by using route guards like CanActivate together with an authentication/authorization service.
+
+When a user tries to open a protected route, the guard checks whether the user is logged in and has the required role/permission.
+
+If not, we redirect them to the login or “access denied” page.
+
+We also use HTTP interceptors to attach tokens to API calls and always enforce authorization on the backend, because Angular alone cannot provide complete security.
+
+_________________________________________________________________________________________________________________________________________________________________________________________________________________
+
+What are Services in Angular?
+
+Services in Angular are classes used to share data and logic across multiple components.
+
+They contain reusable business logic, such as API calls, data processing, authentication, or state management, and are typically injected using Dependency Injection (DI).
+
+_________________________________________________________________________________________________________________________________________________________________________________________________________________
+
+What is View Encapsulation in Angular?
+
+View Encapsulation in Angular controls how component styles are applied, and whether they stay inside the component or leak out to affect other components.
+
+Types of View Encapsulation
+
+Angular provides 3 types:
+
+✅ 1. Emulated (Default)
+
+encapsulation: ViewEncapsulation.Emulated
+
+✔ Styles apply only to that component
+
+✔ Most commonly used
+
+❌ Not real shadow DOM
+
+2. ShadowDom
+
+encapsulation: ViewEncapsulation.ShadowDom
+
+✔ Uses browser’s real Shadow DOM
+
+✔ True style isolation
+
+❌ Limited CSS features support
+
+3. None
+
+encapsulation: ViewEncapsulation.None
+
+✔ Styles become global
+
+❌ Can break other components
+
+_________________________________________________________________________________________________________________________________________________________________________________________________________________
+
+What is a Single Page Application (SPA)?
+
+A Single Page Application is a web application that loads only one HTML page, and then updates the content dynamically using JavaScript without reloading the entire page.
+
+_________________________________________________________________________________________________________________________________________________________________________________________________________________
+
+Difference between @Component and @Directive
+
+@Component is a special type of directive that has a template (HTML) and controls a view.
+
+@Directive does NOT have its own template — it is used to change behavior or appearance of existing DOM elements or components.
+
+_________________________________________________________________________________________________________________________________________________________________________________________________________________
+
+How to add animations in Angular?
+
+To add animations in Angular, we use the Angular Animations API from @angular/animations.
+
+We enable animations by importing BrowserAnimationsModule and then define animations inside the component using trigger, state, style, and transition.
+
+_________________________________________________________________________________________________________________________________________________________________________________________________________________
+
+How to add animations in Angular?
+
+To add animations in Angular, we use the Angular Animations API from @angular/animations.
+
+We enable animations by importing BrowserAnimationsModule and then define animations inside the component using trigger, state, style, and transition.
+
+_________________________________________________________________________________________________________________________________________________________________________________________________________________
+
+How do you pass headers to HttpClient in Angular?
+
+We pass headers to HttpClient by creating an HttpHeaders object and sending it in the request options.
+
+The headers are included in the headers property when calling get, post, etc.
+
+Using Interceptor (Real-time Best Practice)
+
+In real projects, we usually add headers automatically using an interceptor
+
+_________________________________________________________________________________________________________________________________________________________________________________________________________________
+
+What is the Safe Navigation Operator (?.) in Angular?
+
+The Safe Navigation Operator (?.) is used in Angular templates to prevent errors when accessing properties of null or undefined objects.
+
+If the left side is null or undefined, Angular simply returns null instead of throwing an error.
+
+_________________________________________________________________________________________________________________________________________________________________________________________________________________
+
+What is Content Projection in Angular?
+
+Content Projection is a technique in Angular that allows you to pass HTML content from a parent component into a child component’s template using <ng-content>.
+
+It lets the parent decide what content appears inside the child component.
+
+_________________________________________________________________________________________________________________________________________________________________________________________________________________
+
+What is ng-container?
+
+ng-container is an Angular grouping element that does NOT create any extra HTML element in the DOM, but allows you to apply structural directives like *ngIf, *ngFor, *ngSwitch, etc.
+
+Why do we use it?
+
+Because HTML doesn't allow multiple structural directives on the same element.
+
+_________________________________________________________________________________________________________________________________________________________________________________________________________________
+
+What is ng-template?
+
+ng-template is a template that is not rendered by default, but Angular can render it later when needed.
+
+It is like a stored HTML block.
+
+_________________________________________________________________________________________________________________________________________________________________________________________________________________
+
+What is Angular Universal?
+
+Angular Universal is a technology that allows Angular applications to run on the server (Node.js) and generate HTML on the server before sending it to the browser.
+
+This is called Server-Side Rendering (SSR).
+
+Normally Angular apps run only in the browser (client-side).
+
+With Angular Universal, the server renders the first view and sends ready HTML.
+
+_________________________________________________________________________________________________________________________________________________________________________________________________________________
+
+Is Angular Material responsive?
+
+Angular Material is partially responsive.
+
+Many components adapt to screen sizes (buttons, dialogs, nav, lists), but layout responsiveness mainly depends on Angular Flex Layout / CSS / Grid or Angular CDK Layout Breakpoints.
+
+_________________________________________________________________________________________________________________________________________________________________________________________________________________
+
+Why AOT is used in Production?
+
+✅ Pre-compiles templates at build time
+
+✅ Faster application startup
+
+✅ Smaller bundle size (compiler removed)
+
+✅ Better performance for users
+
+✅ Catches template errors during build
+
+✅ More secure (prevents template injection)
+
+✅ No runtime compilation needed
+
+Why AOT is NOT used in Development?
+
+❌ Slower build time
+
+❌ Slower rebuild on save (HMR becomes slow)
+
+❌ Harder to debug (transformed code)
+
+✅ Developers need fast build & serve
+
+✅ JIT allows quicker development cycle
+
+_________________________________________________________________________________________________________________________________________________________________________________________________________________
+
+What is forkJoin?
+
+forkJoin is an RxJS operator that allows you to run multiple Observables in parallel and get the final combined result only when all of them complete.
+
+It is similar to:
+
+✅ Promise.all() but for Observables
+
+✅ When do we use forkJoin?
+
+Use it when:
+
+you need data from multiple API calls
+
+and you can continue only after ALL APIs finish
+
+Example:
+
+✅ Get user details
+
+✅ Get user orders
+
+✅ Get user address
+
+Then show the dashboard
+
+_________________________________________________________________________________________________________________________________________________________________________________________________________________
+
+What is mergeMap?
+
+mergeMap is an RxJS operator used to map a value to an inner Observable and subscribe to multiple inner Observables at the same time (in parallel).
+
+It does NOT cancel previous subscriptions.
+
+✅ Simple Meaning
+
+mergeMap is used when:
+
+✅ you want to call multiple async tasks
+
+✅ let them run in parallel
+
+✅ and get all results as they arrive
+
+_________________________________________________________________________________________________________________________________________________________________________________________________________________
+
+Difference between forkJoin and MergeMap
+
+SIMPLE CORE DIFFERENCE
+
+✅ forkJoin
+
+→ Waits for ALL Observables to finish
+
+→ Emits ONE final combined result
+
+→ Completes
+
+✅ mergeMap
+
+→ Runs multiple Observables in parallel
+
+→ Emits each result as it arrives
+
+→ Keeps listening (continuous)
+
+_________________________________________________________________________________________________________________________________________________________________________________________________________________
+
+1. mergeMap(flatMap)
+
+✅ Definition
+
+Runs multiple inner Observables in parallel and emits results as they arrive.
+
+✅ When to use
+
+When tasks are independent and can run at the same time.
+
+✅ Real-Time Example
+
+Uploading multiple files:
+
+from(files).pipe(
+
+  mergeMap(file => this.upload(file))
+
+).subscribe(res => console.log(res));
+
+✅ All uploads start together
+
+✅ Each result comes separately
+
+✅ Memory Trick
+
+👉 "MERGE = PARALLEL"
+
+_________________________________________________________________________________________________________________________________________________________________________________________________________________
+
+2. concatMap
+
+✅ Definition
+
+Runs Observables one after another (sequentially).
+
+✅ When to use
+
+When order matters or next depends on previous.
+
+✅ Real-Time Example
+
+Order processing:
+
+from(orders).pipe(
+
+  concatMap(order => this.processOrder(order))
+
+).subscribe();
+
+✅ Order 2 starts ONLY after Order 1 completes
+
+✅ Safe for dependent APIs
+
+✅ Memory Trick
+
+👉 "CONCAT = QUEUE"
+
+_________________________________________________________________________________________________________________________________________________________________________________________________________________
+
+3. forkJoin
+
+✅ Definition
+
+Runs multiple Observables in parallel and emits ONE final result when ALL complete.
+
+✅ When to use
+
+When you need all data before continuing.
+
+✅ Real-Time Example
+
+Loading dashboard:
+
+forkJoin({
+
+  user: getUser(),
+
+  orders: getOrders(),
+
+  settings: getSettings()
+
+}).subscribe(result => console.log(result));
+
+✅ Show dashboard only when ALL API calls finish
+
+✅ Memory Trick
+
+👉 "forkJoin = Promise.all"
+
+_________________________________________________________________________________________________________________________________________________________________________________________________________________
+
+4. switchMap
+
+✅ Definition
+
+Switches to a new Observable and cancels previous one.
+
+✅ When to use
+
+Search boxes / Autocomplete / Typeahead
+
+✅ Real-Time Example
+
+fromEvent(searchBox, 'input').pipe(
+
+  debounceTime(300),
+
+  switchMap(text => this.search(text))
+
+).subscribe();
+
+✅ User types fast
+
+✅ Old API requests are cancelled
+
+✅ Only latest request matters
+
+✅ Memory Trick
+
+👉 "SWITCH = CANCEL previous"
+
+_________________________________________________________________________________________________________________________________________________________________________________________________________________
+
+exhaustMap (VERY IMPORTANT)'
+
+✅ Definition
+
+Ignores new values until the current Observable completes
+
+✅ When to use
+
+To prevent double clicks / duplicate submissions
+
+✅ Real-Time Example
+
+fromEvent(button, 'click').pipe(
+
+  exhaustMap(() => this.saveForm())
+
+).subscribe();
+
+✅ User clicks 5 times
+
+✅ Only ONE API call is sent
+
+❌ Rest are ignored
+
+✅ Memory Trick
+
+👉 "EXHAUST = I’m busy, wait!"
+
+_________________________________________________________________________________________________________________________________________________________________________________________________________________
+
+combineLatest
+
+✅ Definition
+
+Emits whenever ANY Observable emits, combining latest values from all.
+
+✅ When to use
+
+Filters / dynamic UI updates
+
+✅ Real-Time Example
+
+Amazon filters:
+
+combineLatest([
+
+  category$,
+
+  price$,
+
+  rating$
+
+]).subscribe(filters => loadProducts(filters));
+
+
+Update products every time filter changes
+
+✅ Memory Trick
+
+👉 "LATEST + CONTINUOUS"
+
+_________________________________________________________________________________________________________________________________________________________________________________________________________________
+
+| Scenario              | Operator      |
+| --------------------- | ------------- |
+| Search typing         | switchMap     |
+| Upload multiple files | mergeMap      |
+| Order processing      | concatMap     |
+| Prevent double submit | exhaustMap    |
+| Load dashboard data   | forkJoin      |
+| Filter products       | combineLatest |
+
+_________________________________________________________________________________________________________________________________________________________________________________________________________________
+
+Top Differences Between JavaScript and TypeScript
+
+| Feature                | JavaScript (JS)               | TypeScript (TS)                               |
+| ---------------------- | ----------------------------- | --------------------------------------------- |
+| **Type System**        | No type system (dynamic)      | Strong type system (static)                   |
+| **Error Detection**    | Errors appear at runtime      | Errors caught at compile-time                 |
+| **Compilation**        | No compilation needed         | Must compile to JavaScript                    |
+| **File Extension**     | `.js`                         | `.ts`                                         |
+| **Interfaces / Types** | ❌ Not available               | ✅ Supported                                   |
+| **Decorators**         | Limited / experimental        | Fully supported (Angular uses them)           |
+| **Tooling**            | Basic intellisense            | Rich tooling (auto-complete, refactor)        |
+| **OOP Support**        | Supports OOP but loosely      | Strong OOP with classes, interfaces, generics |
+| **Browser Support**    | Directly runs in browser      | Needs transpiler (tsc)                        |
+| **Learning Curve**     | Easy                          | More complex                                  |
+| **Use Case**           | Small-to-medium apps, scripts | Enterprise-level apps (Angular, NestJS)       |
+
+_________________________________________________________________________________________________________________________________________________________________________________________________________________
+
+What is the difference between provider and inject?
+
+provider and inject are two different parts of Angular’s Dependency Injection system, but they do different jobs.
+
+🔥 1. What is a Provider?
+
+A provider tells Angular HOW to create or supply a dependency (service).
+
+It basically registers a service with Angular’s DI system.
+
+✔ Provider = Registration
+
+It tells Angular:
+
+"This is a service. Please create it when needed."
+
+Without a provider, Angular cannot inject the service.
+
+2. What is inject()?
+
+inject() is a function used to get/use a dependency inside code (mostly without constructor).
+
+Used in:
+
+Standalone components
+
+Signals
+
+Run functions
+
+Factory providers
+
+Interceptors
+
+Custom pipes
+
+Services (rarely)
+
+_________________________________________________________________________________________________________________________________________________________________________________________________________________
+
+What are Hierarchical Injectors in Angular?
+
+Hierarchical Injectors are Angular’s multi-level dependency injection system, where each module, component, and element can have its own injector.
+
+This means:
+
+✔ Services can exist at different levels
+
+✔ Services can override parent services
+
+✔ Each component can have its own instance of a service
+
+Angular doesn’t use one single injector.
+
+It has a tree (hierarchy) of injectors.
+
+_________________________________________________________________________________________________________________________________________________________________________________________________________________
+
+What is Wildcard Routing in Angular?
+
+Wildcard routing is a special route in Angular used to handle undefined or invalid URLs.
+
+It catches any route that does NOT match existing routes and usually displays a 404 Not Found page.
+
+{ path: '**', component: PageNotFoundComponent }
+
+
+_________________________________________________________________________________________________________________________________________________________________________________________________________________
+
+What is FormGroup in Angular?
+
+FormGroup is a Reactive Forms class in Angular that is used to group multiple form controls into a single object.
+
+It is like a container that holds multiple FormControls.
+
+Think of it as:
+
+✔ FormGroup = Full form
+
+✔ FormControl = Single input field
+
+import { FormGroup, FormControl } from '@angular/forms';
+
+export class LoginComponent {
+  loginForm = new FormGroup({
+    email: new FormControl(''),
+    password: new FormControl('')
+  });
+
+  submit() {
+    console.log(this.loginForm.value);
+  }
+}
+
+<form [formGroup]="loginForm" (ngSubmit)="submit()">
+  <input formControlName="email" placeholder="Email">
+  <input formControlName="password" type="password" placeholder="Password">
+  <button type="submit">Login</button>
+</form>
+
+
+
+_________________________________________________________________________________________________________________________________________________________________________________________________________________
+
+What is FormBuilder in Angular?
+
+FormBuilder is a service provided by Angular’s Reactive Forms module that helps you create FormGroups and FormControls in a shorter, cleaner, and easier way.
+
+It reduces the boilerplate code needed to build forms.
+
+constructor(private fb: FormBuilder) {}
+
+loginForm = this.fb.group({
+  email: [''],
+  password: ['']
+});
+
+
+_________________________________________________________________________________________________________________________________________________________________________________________________________________
+
+What is an Async Validator in Angular?
+
+An Async Validator is a validator that performs asynchronous operations before deciding whether a form control is valid or not.
+
+It is used when validation depends on:
+
+A server call
+
+A database check
+
+A delay
+
+Any operation that returns an Observable or Promise
+
+_________________________________________________________________________________________________________________________________________________________________________________________________________________
+
+What is valueChanges in Angular?
+
+valueChanges is an Observable provided by FormControl, FormGroup, and FormArray that emits every time the value of the form changes.
+
+It allows you to:
+
+Listen to input changes in real time
+
+Perform actions based on user input
+
+Apply dynamic validations
+
+Enable/disable fields dynamically
+
+Make API calls as the user types (e.g., search bar)
+
+⭐ Where can valueChanges be used?
+
+You can use it on:
+
+FormControl
+
+FormGroup
+
+FormArray
+
+_________________________________________________________________________________________________________________________________________________________________________________________________________________
+
+What is HttpHeaders in Angular?
+
+HttpHeaders is a class provided by Angular to set, modify, and manage HTTP request headers when making API calls using HttpClient.
+
+Headers provide additional information to the server such as:
+
+Authentication token
+
+Content type
+
+Custom headers
+
+CORS details
+
+API keys
+
+_________________________________________________________________________________________________________________________________________________________________________________________________________________
+
+What are HttpParams in Angular?
+
+HttpParams is a class in Angular used to set query parameters for HTTP requests.
+
+Why do we use HttpParams?
+
+To send:
+
+Filters
+
+Pagination data
+
+Search inputs
+
+Sorting options
+
+Optional request parameters
+
+API keys
+
+Instead of building URLs manually.
+
+_________________________________________________________________________________________________________________________________________________________________________________________________________________
+
+Difference Between HttpClient.get() and fetch() in Angular
+
+| Feature                                 | `HttpClient.get()` (Angular) | `fetch()` (Browser API)           |
+| --------------------------------------- | ---------------------------- | --------------------------------- |
+| Built-in to Angular?                    | ✔ Yes                        | ❌ No (Native JS API)              |
+| Returns                                 | **Observable**               | **Promise**                       |
+| Auto JSON Parsing                       | ✔ Yes                        | ❌ No (you must call `res.json()`) |
+| Interceptors Support                    | ✔ Yes                        | ❌ No                              |
+| Error Handling                          | Easy (RxJS catchError)       | Hard (manual checks)              |
+| Request/Response Transformation         | ✔ Yes                        | ❌ Minimal                         |
+| Automatic Type Safety                   | ✔ Yes (Generics)             | ❌ No                              |
+| Cancelling Requests                     | ✔ Yes (RxJS unsubscribe)     | Limited (AbortController)         |
+| Uses Zone.js (Angular change detection) | ✔ Yes                        | ❌ No                              |
+| Best For                                | Angular apps                 | General JS, Node, browsers        |
+
+_________________________________________________________________________________________________________________________________________________________________________________________________________________
+
+What is takeUntil in Angular (RxJS)?
+
+takeUntil is an RxJS operator that automatically unsubscribes from an Observable when another Observable (usually a Subject) emits a value.
+
+In simple words:
+
+✔ takeUntil = Stop listening when a signal is triggered
+
+✔ Helps prevent memory leaks
+
+✔ Commonly used in ngOnDestroy() to unsubscribe safely
+
+⭐ Why do we need takeUntil?
+
+Because in Angular, Observables keep running unless you unsubscribe.
+
+If you don't unsubscribe:
+
+Memory leaks occur
+
+Performance drops
+
+Old subscriptions continue firing
+
+takeUntil solves this.
+
+⭐ How takeUntil works?
+
+You create a Subject called destroy$.
+
+When the component is destroyed, you emit a value.
+
+takeUntil sees that value → unsubscribes.
+
+_________________________________________________________________________________________________________________________________________________________________________________________________________________
+
+What is pipe() in RxJS?
+
+pipe() is a function used to combine multiple RxJS operators and apply them to an Observable in a clean, readable way.
+
+In simple words:
+
+✔ pipe() = A way to chain RxJS operators
+
+✔ Makes observable transformations readable
+
+✔ Allows filtering, mapping, delaying, combining streams, etc.
+
+Just like chaining methods in a sequence.
+
+⭐ Why do we use pipe()?
+
+Because you often need to:
+
+Transform data (map)
+
+Filter values (filter)
+
+Take only some values (take, takeUntil)
+
+Switch between streams (switchMap)
+
+Delay emissions (debounceTime)
+
+Handle errors (catchError)
+
+And many more…
+
+All these operators must be inside pipe().
+
+_________________________________________________________________________________________________________________________________________________________________________________________________________________
+
+What is Webpack in Angular?
+
+Webpack is a module bundler used internally by Angular CLI to:
+
+✔ Bundle all your Angular files
+
+✔ Optimize them
+
+✔ Convert TypeScript → JavaScript
+
+✔ Process HTML, CSS, images
+
+✔ Split code into chunks
+
+✔ Prepare everything for the browser
+
+In simple words:
+
+🔥 Webpack = The tool that builds and packages your Angular app behind the scenes.
+
+You rarely configure it manually because Angular CLI handles it for you.
+
+⭐ Why does Angular use Webpack?
+
+Because modern apps have:
+
+TypeScript
+
+Multiple components
+
+Many JavaScript modules
+
+CSS, images, assets
+
+Lazy-loading modules
+
+Build optimizations
+
+Webpack takes ALL of them and generates:
+
+✔ /dist folder
+
+✔ Optimized JS bundles
+
+✔ Minified CSS + assets
+
+✔ Chunked lazy-loaded bundles
+
+_________________________________________________________________________________________________________________________________________________________________________________________________________________
+
+What is trackBy in *ngFor?
+
+trackBy is a special function used with *ngFor to help Angular track list items efficiently.
+
+Normally, when a list changes, Angular re-renders the entire list, which is slow for big lists.
+
+trackBy tells Angular how to identify each item, so it updates only the changed items instead of re-rendering everything.
+
+⭐ Why do we use trackBy?
+
+✔ Increases performance
+
+✔ Avoids unnecessary DOM updates
+
+✔ Stops Angular from destroying & recreating repeated items
+
+✔ Prevents input fields losing focus inside lists
+
+✔ Reduces flickering
+
+Especially useful for:
+
+Large lists
+
+Dynamic data
+
+Lists with input controls
+
+Real-time updates
+_________________________________________________________________________________________________________________________________________________________________________________________________________________
+
+_________________________________________________________________________________________________________________________________________________________________________________________________________________
+
+_________________________________________________________________________________________________________________________________________________________________________________________________________________
+
+_________________________________________________________________________________________________________________________________________________________________________________________________________________
+_________________________________________________________________________________________________________________________________________________________________________________________________________________
+
+_________________________________________________________________________________________________________________________________________________________________________________________________________________
+
+_________________________________________________________________________________________________________________________________________________________________________________________________________________
+
+_________________________________________________________________________________________________________________________________________________________________________________________________________________
+_________________________________________________________________________________________________________________________________________________________________________________________________________________
+_________________________________________________________________________________________________________________________________________________________________________________________________________________
+_________________________________________________________________________________________________________________________________________________________________________________________________________________	
