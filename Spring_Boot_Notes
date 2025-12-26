@@ -1,0 +1,1312 @@
+What is Spring Framework?
+
+Spring Framework — It’s a lightweight, open-source framework for building Java enterprise applications. It provides comprehensive infrastructure support such as dependency injection (DI), aspect-oriented programming (AOP), transaction management, and integration with various technologies.
+
+💡 Core idea: Loose coupling through Inversion of Control (IoC) using containers like ApplicationContext.
+
+_________________________________________________________________________________________________________________________________________________________________________________________________________________
+
+What are the advantages of using Spring?
+
+Advantages of using Spring Framework:
+
+Dependency Injection (DI): Promotes loose coupling between components.
+
+Modular Architecture: You can use only what you need (e.g., Spring MVC, Spring Data).
+
+Integration Support: Easily integrates with Hibernate, JPA, JMS, Security, etc.
+
+Transaction Management: Simplifies handling of transactions across databases.
+
+Testability: Beans can be easily mocked or tested in isolation.
+
+Community & Ecosystem: Strong ecosystem with Spring Boot, Spring Cloud, Spring Security, etc.
+
+_________________________________________________________________________________________________________________________________________________________________________________________________________________
+
+What is Inversion of Control (IoC)?
+
+Inversion of Control (IoC) — It’s a design principle where the control of object creation and dependency management is transferred from the application code to the Spring container.
+
+💡 Instead of classes creating their own dependencies, Spring injects them automatically.
+
+_________________________________________________________________________________________________________________________________________________________________________________________________________________
+
+What is Dependency Injection?
+
+Dependency Injection (DI) — It’s a design pattern used by Spring to implement IoC, where the required dependencies (objects) are automatically provided to a class instead of being created manually.
+
+💡 Spring injects dependencies at runtime via constructor, setter, or field injection.
+
+Why use Dependency Injection?
+
+Benefit					Explanation
+
+Loose Coupling			Classes depend on abstractions, not implementations
+
+Reusability				Easier to replace components
+
+Testability				You can inject mock objects in unit tests
+
+Maintainability			Easier to manage dependencies in large apps
+
+🧠 Types of Dependency Injection
+
+Type							Description																Example
+
+Constructor Injection			Dependencies are passed through the constructor							Car(Engine engine)
+
+Setter Injection				Dependencies are passed via setter methods								car.setEngine(engine)
+
+Field Injection					Dependencies injected directly into fields (e.g., with @Autowired)		@Autowired Engine engine;
+
+_________________________________________________________________________________________________________________________________________________________________________________________________________________
+
+What is a Spring Bean?
+
+Spring Bean — A Spring Bean is an object managed, created, and injected by the Spring IoC container.
+
+💡 Beans are defined using annotations like @Component, @Service, @Repository, or via XML configuration.
+
+_________________________________________________________________________________________________________________________________________________________________________________________________________________
+
+What is the Spring Bean lifecycle?
+
+Spring Bean Lifecycle — It’s the sequence of steps a Bean goes through from creation to destruction, managed by the Spring IoC container.
+
+Lifecycle Steps:
+
+Instantiation – Bean is created.
+
+Dependency Injection – Dependencies are injected.
+
+setBeanName() / setBeanFactory() (if applicable).
+
+@PostConstruct / afterPropertiesSet() – Initialization logic runs.
+
+Bean is ready for use.
+
+@PreDestroy / destroy() – Cleanup before container shutdown.
+
+_________________________________________________________________________________________________________________________________________________________________________________________________________________
+
+What are the different scopes of a Spring Bean?
+
+Spring Bean Scopes — define how and when a bean is created and shared within the application context.
+
+🧩 Common Bean Scopes:
+
+singleton (default) — One shared instance per Spring container.
+
+prototype — A new instance every time it’s requested.
+
+request — One instance per HTTP request (web apps only).
+
+session — One instance per HTTP session.
+
+application — One instance per ServletContext.
+
+➡️ Use singleton for stateless beans and prototype for stateful ones.
+
+_________________________________________________________________________________________________________________________________________________________________________________________________________________
+
+What is the difference between @Component, @Service, and @Repository annotations?
+
+@Component vs @Service vs @Repository — all three are stereotype annotations used to mark a class as a Spring-managed bean, but they serve different semantic purposes:
+
+Annotation		Purpose														Typical 											Use	Extra Behavior
+
+@Component		Generic stereotype for any Spring-managed component			Utility or helper classes							None
+
+@Service		Marks a service layer class									Business logic										None (just clearer intent)
+
+@Repository		Marks a DAO (data access) class								Database operations									Adds automatic exception translation (converts SQL exceptions to Spring’s DataAccessException)
+
+_________________________________________________________________________________________________________________________________________________________________________________________________________________
+
+What is the use of @Autowired annotation?
+
+@Autowired — is used for automatic dependency injection in Spring.
+
+💡 It tells Spring to automatically inject a matching bean into a class field, constructor, or setter method — instead of you manually creating the object.
+
+➡️ Spring searches for a suitable bean (by type) in the container and injects it automatically.
+_________________________________________________________________________________________________________________________________________________________________________________________________________________
+
+What is the difference between @Autowired and constructor injection?
+
+@Autowired vs Constructor Injection
+
+Aspect				@Autowired																						Constructor Injection
+
+Meaning				Annotation used by Spring to inject dependencies automatically.									A method of injecting dependencies through the class constructor.
+
+Usage				Can be applied to fields, setters, or constructors.												Specifically uses the constructor to inject dependencies.
+
+Recommendation		Field injection (with @Autowired) is not recommended — hard to test and less clear.				✅ Preferred approach — ensures immutability and easy testing.
+
+_________________________________________________________________________________________________________________________________________________________________________________________________________________
+
+What is @Qualifier used for?
+
+@Qualifier — is used with @Autowired to resolve ambiguity when multiple beans of the same type exist.
+
+💡 It tells Spring which specific bean to inject by its name.
+
+➡️ Use @Qualifier when you have multiple beans of the same type to explicitly choose one.
+
+_________________________________________________________________________________________________________________________________________________________________________________________________________________
+
+What is the role of @Primary annotation?
+
+@Primary — is used to mark one bean as the default choice when multiple beans of the same type exist.
+
+💡 If multiple candidates are found for autowiring and one is marked with @Primary, Spring injects that one automatically (unless @Qualifier is explicitly used).
+
+➡️ Use @Primary to set a default bean when multiple beans of the same type exist.
+
+_________________________________________________________________________________________________________________________________________________________________________________________________________________
+
+What is ApplicationContext in Spring?
+
+ApplicationContext — is the central interface in Spring that provides configuration, manages beans, and handles dependency injection.
+
+💡 It’s essentially the Spring IoC container that creates, configures, and manages all beans.
+
+➡️ ApplicationContext loads bean definitions, wires dependencies, and manages the complete lifecycle of beans.
+
+_________________________________________________________________________________________________________________________________________________________________________________________________________________
+
+Difference between ApplicationContext and BeanFactory?
+
+Difference between ApplicationContext and BeanFactory:
+
+Feature					BeanFactory													ApplicationContext
+
+Purpose					Basic IoC container											Advanced container (extends BeanFactory)
+
+Bean Loading			Lazy (creates beans on demand)								Eager (creates beans at startup by default)
+
+Enterprise Features		❌ No support for events, i18n, or AOP						✅ Supports events, i18n, AOP, etc.
+
+Usage					Lightweight, used in simple apps or for testing				Commonly used in all Spring applications
+
+Example					XmlBeanFactory (deprecated)									AnnotationConfigApplicationContext, ClassPathXmlApplicationContext
+
+Summary:
+
+➡️ ApplicationContext = BeanFactory + more features (event handling, resource loading, etc.), and it’s the preferred container in Spring.
+
+_________________________________________________________________________________________________________________________________________________________________________________________________________________
+
+What is Spring Boot and why do we use it?
+
+Spring Boot — is a framework built on top of the Spring Framework that simplifies building, configuring, and deploying Spring applications.
+
+💡 It eliminates the need for complex XML configuration by providing auto-configuration, starter dependencies, and an embedded server (like Tomcat).
+
+Why we use it:
+
+🚀 Faster development – minimal setup.
+
+⚙️ Auto-configuration – reduces boilerplate code.
+
+📦 Starters – easy dependency management (spring-boot-starter-web, etc.).
+
+🌐 Embedded servers – no need to deploy WAR files.
+
+📈 Production-ready features – metrics, health checks, etc.
+
+_________________________________________________________________________________________________________________________________________________________________________________________________________________
+
+What are the main features of Spring Boot?
+
+Main Features of Spring Boot:
+
+Auto-Configuration – Automatically configures beans based on classpath and properties (no manual setup).
+
+Starter Dependencies – Predefined dependency bundles (e.g., spring-boot-starter-web, spring-boot-starter-data-jpa) for faster setup.
+
+Embedded Servers – Comes with Tomcat, Jetty, or Undertow — no external server needed.
+
+Spring Boot CLI – Allows running Groovy scripts for quick prototyping.
+
+Actuator – Provides production-ready endpoints for monitoring (e.g., /actuator/health, /actuator/metrics).
+
+Externalized Configuration – Supports configuration via .properties, .yaml, environment variables, etc.
+
+Easy Integration – Works seamlessly with Spring Security, JPA, Web, and Microservices tools.
+
+➡️ Spring Boot focuses on rapid development with minimal configuration and maximum productivity.
+
+_________________________________________________________________________________________________________________________________________________________________________________________________________________
+
+What is the difference between Spring and Spring Boot?
+
+Difference between Spring and Spring Boot:
+
+Feature							Spring Framework																Spring Boot
+
+Purpose							Provides core features like IoC, AOP, and MVC for enterprise apps.				Simplifies Spring setup with auto-configuration and embedded servers.
+
+Configuration					Requires manual XML or Java-based configuration.								Auto-configuration — minimal setup needed.
+
+Dependency Management			Developer must add and manage dependencies manually.							Uses starter dependencies (e.g., spring-boot-starter-web).
+
+Server Setup					Needs external web server (Tomcat, Jetty).										Comes with embedded servers (runs as a standalone JAR).
+
+Deployment						Typically deployed as a WAR file.												Runs directly with java -jar (embedded container).
+
+Production Features				Basic.																			Built-in Actuator for health checks, metrics, etc.
+
+➡️ In short: Spring = Framework foundation, Spring Boot = Ready-to-run, auto-configured version of Spring.
+
+_________________________________________________________________________________________________________________________________________________________________________________________________________________
+
+What is a “starter” dependency in Spring Boot?
+
+Starter Dependency — is a pre-configured set of commonly used dependencies bundled together to simplify project setup in Spring Boot.
+
+💡 Instead of adding multiple individual libraries manually, you just add one starter that includes them all.
+
+<dependency>
+
+    <groupId>org.springframework.boot</groupId>
+
+    <artifactId>spring-boot-starter-web</artifactId>
+
+</dependency>
+
+This single starter includes:
+
+Spring MVC
+
+Jackson (for JSON)
+
+Embedded Tomcat
+
+Validation libraries
+
+Common starters:
+
+spring-boot-starter-data-jpa → for JPA + Hibernate
+
+spring-boot-starter-security → for security
+
+spring-boot-starter-test → for testing
+
+➡️ Starters reduce dependency management complexity and make setup fast and consistent.
+
+_________________________________________________________________________________________________________________________________________________________________________________________________________________
+
+What is spring-boot-starter-web used for?
+
+spring-boot-starter-web — is a Spring Boot starter used to build web applications (both RESTful and traditional MVC).
+
+💡 It includes all the necessary dependencies for developing web-based applications.
+
+It automatically brings in:
+
+Spring MVC → for web and REST APIs
+
+Jackson → for JSON serialization/deserialization
+
+Tomcat (embedded) → as the default web server
+
+Validation API → for request validation
+
+_________________________________________________________________________________________________________________________________________________________________________________________________________________
+
+What is application.properties or application.yml file used for?
+
+application.properties or application.yml — is the central configuration file in a Spring Boot project.
+
+💡 It’s used to externalize configuration, so you don’t hardcode values in your code. Spring Boot automatically loads these files at startup.
+
+Common uses:
+
+Server configuration
+
+Database connection details
+
+Logging setup
+
+Custom application settings
+
+_________________________________________________________________________________________________________________________________________________________________________________________________________________
+
+What is the use of @SpringBootApplication annotation?
+
+@SpringBootApplication — is a convenience annotation that marks the main class of a Spring Boot application.
+
+💡 It combines three key annotations:
+
+@SpringBootConfiguration → marks it as a configuration class.
+
+@EnableAutoConfiguration → enables Spring Boot’s auto-configuration.
+
+@ComponentScan → scans the current package and sub-packages for Spring components.
+
+_________________________________________________________________________________________________________________________________________________________________________________________________________________
+
+What are the components combined in @SpringBootApplication?
+
+In a Spring Boot application, we typically use the @SpringBootApplication annotation. Is there any alternative annotation or equivalent configuration?
+
+@SpringBootApplication
+
+
+	or 
+
+
+= @Configuration
+
++ @EnableAutoConfiguration
+
++ @ComponentScan
+
+@Configuration
+
+Marks the class as a source of bean definitions.
+
+It’s similar to using an XML configuration in old Spring.
+
+It tells Spring that this class contains @Bean methods or configurations.
+
+@EnableAutoConfiguration
+
+Enables Spring Boot’s auto-configuration mechanism.
+
+It automatically configures beans based on the classpath and defined properties.
+
+Example:
+
+If spring-boot-starter-web is in your dependencies → Spring automatically configures Tomcat + DispatcherServlet.
+
+@ComponentScan
+
+Tells Spring where to look for components like @Component, @Service, @Controller, etc.
+
+By default, it scans the current package and its sub-packages.
+
+_________________________________________________________________________________________________________________________________________________________________________________________________________________
+
+What is auto-configuration in Spring Boot?
+
+Auto-Configuration — is a key Spring Boot feature that automatically configures your application based on the dependencies present in the classpath.
+
+💡 It saves you from writing manual configuration for common setups (like DataSource, DispatcherServlet, Jackson, etc.).
+
+Example:
+
+If spring-boot-starter-web is on the classpath → Spring Boot auto-configures Spring MVC and an embedded Tomcat.
+
+If spring-boot-starter-data-jpa is present → It configures a DataSource, EntityManagerFactory, and TransactionManager.
+
+Controlled by:
+
+@EnableAutoConfiguration (part of @SpringBootApplication)
+
+Can be customized or disabled using @SpringBootApplication(exclude = ...)
+
+_________________________________________________________________________________________________________________________________________________________________________________________________________________
+
+How does Spring Boot perform auto-configuration internally?
+
+Spring Boot’s auto-configuration works in 5 main steps 👇
+
+@EnableAutoConfiguration (from @SpringBootApplication)
+
+→ Triggers the auto-configuration process during startup.
+
+spring.factories / META-INF/spring/org.springframework.boot.autoconfigure.AutoConfiguration.imports
+
+→ Spring Boot scans these files in the classpath to find all available auto-configuration classes (e.g., DataSourceAutoConfiguration, WebMvcAutoConfiguration, etc.).
+
+Conditional Annotations
+
+→ Each auto-config class is loaded only if certain conditions are met, using annotations like:
+
+@ConditionalOnClass — activates if a specific class is on the classpath.
+
+@ConditionalOnMissingBean — activates if no custom bean is defined.
+
+@ConditionalOnProperty — activates if a property is set in application.properties.
+
+Spring Boot Context Initialization
+
+→ The selected configurations are applied, creating and wiring the necessary beans automatically.
+
+Customization via Properties
+
+→ Developers can override default settings in application.properties or define custom beans — Boot will skip default ones if yours exist.
+
+Example:
+
+If spring-boot-starter-web is in the classpath 👇
+
+Spring sees DispatcherServlet class → @ConditionalOnClass(DispatcherServlet.class) becomes true → WebMvcAutoConfiguration activates → MVC beans auto-configured.
+
+➡️ In short: Spring Boot reads metadata → checks conditions → auto-loads only the matching configurations → builds the app context automatically.
+
+_________________________________________________________________________________________________________________________________________________________________________________________________________________
+
+What is SpringApplication.run() method doing?
+
+SpringApplication.run() — is the main entry point that bootstraps a Spring Boot application.
+
+💡 It starts the Spring Boot application context, triggers auto-configuration, and launches the embedded web server (if applicable).
+
+Key steps performed by SpringApplication.run():
+
+Creates a SpringApplication instance.
+
+Loads configurations (like @SpringBootApplication, properties, environment variables).
+
+Performs classpath scanning and creates the ApplicationContext.
+
+Triggers auto-configuration (based on dependencies).
+
+Registers beans and listeners.
+
+Starts the embedded server (Tomcat/Jetty/Undertow) if it’s a web app.
+
+Returns the ApplicationContext for further use.
+
+_________________________________________________________________________________________________________________________________________________________________________________________________________________
+
+What is the structure of a typical Spring Boot project?
+
+A typical Spring Boot project structure follows a layered architecture and a package-by-feature convention for clarity and maintainability.
+
+my-springboot-app/
+│
+├── src/
+│   ├── main/
+│   │   ├── java/
+│   │   │   └── com/example/myapp/
+│   │   │       ├── MySpringBootApp.java        ← Main class (@SpringBootApplication)
+│   │   │       │
+│   │   │       ├── controller/                 ← REST Controllers (@RestController)
+│   │   │       ├── service/                    ← Business logic layer (@Service)
+│   │   │       ├── repository/                 ← Data access layer (@Repository)
+│   │   │       ├── model/                      ← Entity/DTO classes
+│   │   │       └── config/                     ← Configuration classes
+│   │   │
+│   │   └── resources/
+│   │       ├── application.properties (or .yml) ← App configuration
+│   │       ├── static/                         ← Static resources (HTML, CSS, JS)
+│   │       ├── templates/                      ← Thymeleaf or Freemarker templates
+│   │       └── logback-spring.xml              ← Logging configuration
+│   │
+│   └── test/                                   ← Unit and integration tests
+│
+├── pom.xml or build.gradle                     ← Build configuration (Maven/Gradle)
+└── README.md
+
+_________________________________________________________________________________________________________________________________________________________________________________________________________________
+
+How do you load external configurations in Spring Boot?
+
+Spring Profiles — allow you to define different configurations for different environments (like dev, test, prod).
+
+💡 This helps you switch between setups easily without changing the code.
+
+How to Configure Profiles
+
+1. Create profile-specific property files
+
+Spring automatically loads the file matching the active profile name.
+
+application.properties
+
+application-dev.properties
+
+application-test.properties
+
+application-prod.properties
+
+2. Activate profile (3 ways)
+
+In properties file:
+
+spring.profiles.active=dev
+
+Using environment variable:
+
+SPRING_PROFILES_ACTIVE=prod
+
+3. Use @Profile annotation (for beans)
+
+_________________________________________________________________________________________________________________________________________________________________________________________________________________
+
+How do you change the default port in Spring Boot?
+
+1. In application.properties 
+
+server.port=9090
+
+2. In application.yml
+
+server:
+
+  port: 9090
+
+3. Using Command-Line Argument
+
+java -jar myapp.jar --server.port=9090
+
+4. Using Environment Variable
+
+export SERVER_PORT=9090
+
+5. Programmatically (if dynamic setup needed)
+
+@SpringBootApplication
+
+public class MyApp {
+
+    public static void main(String[] args) {
+
+        SpringApplication app = new SpringApplication(MyApp.class);
+
+        app.setDefaultProperties(Map.of("server.port", "9090"));
+
+        app.run(args);
+    }
+}
+
+_________________________________________________________________________________________________________________________________________________________________________________________________________________
+
+How do you create a RESTful API in Spring Boot?
+
+Steps (brief)
+
+Create Spring Boot app (@SpringBootApplication) — add spring-boot-starter-web (and spring-boot-starter-data-jpa + DB driver if you need persistence).
+
+Define model / DTO — simple POJO or @Entity.
+
+Create repository/service — JpaRepository for DB, service layer for business logic.
+
+Create controller — @RestController with @GetMapping, @PostMapping, etc.
+
+Configure (application.properties / .yml) — server port, datasource, etc.
+
+Run & test — mvn spring-boot:run or java -jar, test with curl/Postman.
+
+_________________________________________________________________________________________________________________________________________________________________________________________________________________
+
+What is the difference between @Controller and @RestController?
+
+Feature						@Controller																					@RestController
+
+Purpose						Used to define a web controller that returns views (HTML pages).							Used to create RESTful web services that return data (JSON/XML).
+
+Return Type					Returns a view name (resolved by ViewResolver, like Thymeleaf).								Returns response data directly (serialized to JSON/XML).
+
+Includes @ResponseBody		❌ No (must be added manually).																✅ Yes (automatically adds @ResponseBody to all methods).
+
+Typical Use Case			MVC applications serving UI.																REST APIs for backend service
+
+_________________________________________________________________________________________________________________________________________________________________________________________________________________
+
+What is the purpose of @RequestMapping annotation?
+
+@RequestMapping — is used to map web requests (URLs) to specific controller classes or handler methods in Spring MVC.
+
+💡 It tells Spring which method should handle a given HTTP request path and method type.
+
+_________________________________________________________________________________________________________________________________________________________________________________________________________________
+
+Difference between @GetMapping, @PostMapping, @PutMapping, and @DeleteMapping?
+
+Annotation			HTTP Method				Purpose													Typical Use
+
+@GetMapping			GET						Retrieve data from the server							Fetch records, e.g., GET /users
+
+@PostMapping		POST					Send data to the server to create a new resource		Create a record, e.g., POST /users
+
+@PutMapping			PUT						Update an existing resource (replace entire entity)		Update a record, e.g., PUT /users/1
+
+@DeleteMapping		DELETE					Remove a resource from the server						Delete a record, e.g., DELETE /users/1
+
+_________________________________________________________________________________________________________________________________________________________________________________________________________________
+
+How do you handle path variables and query parameters in Spring Boot?
+
+1. Path Variables (@PathVariable)
+
+Used to extract values from the URL path itself.
+
+2. Query Parameters (@RequestParam)
+
+Used to extract parameters from the query string in the URL.
+
+_________________________________________________________________________________________________________________________________________________________________________________________________________________
+
+How can you return JSON or XML responses in Spring Boot?
+
+By Default: Spring Boot returns JSON
+
+Spring Boot uses Jackson (from spring-boot-starter-web) to automatically convert Java objects into JSON responses.
+
+To Support XML Response
+
+You just need to add the Jackson XML dependency:
+
+<dependency>
+
+    <groupId>com.fasterxml.jackson.dataformat</groupId>
+
+    <artifactId>jackson-dataformat-xml</artifactId>
+
+</dependency>
+
+Then, Spring Boot will automatically convert responses to XML if the client requests it via the Accept header.
+
+Content Negotiation (Automatic)
+
+Spring Boot chooses JSON or XML based on the Accept header:
+
+Accept: application/json → returns JSON
+
+Accept: application/xml → returns XML
+
+_________________________________________________________________________________________________________________________________________________________________________________________________________________
+
+How do you handle exceptions in Spring Boot REST APIs?
+
+1. Using @ExceptionHandler (Local Exception Handling)
+
+Handle specific exceptions within a controller.
+
+2. Using @ControllerAdvice (Global Exception Handling)
+
+Centralized handling for all controllers in one place.
+
+3. Custom Error Response Structure (Optional)
+
+You can return structured JSON for better clarity.
+
+_________________________________________________________________________________________________________________________________________________________________________________________________________________
+
+What is @ControllerAdvice and how is it used?
+
+@ControllerAdvice — is a Spring annotation used to handle exceptions and provide global configurations across all controllers in a Spring Boot application.
+
+💡 It allows you to write centralized exception-handling logic, instead of repeating @ExceptionHandler in every controller.
+
+✅ How It Works
+
+It is automatically detected by Spring during component scanning.
+
+It applies to all controllers (unless restricted by package/class).
+
+Usually used with @ExceptionHandler, @InitBinder, or @ModelAttribute.
+
+_________________________________________________________________________________________________________________________________________________________________________________________________________________
+
+What is ResponseEntity and why is it useful?
+
+ResponseEntity — is a Spring class that represents the entire HTTP response — including status code, headers, and body.
+
+💡 It gives you full control over what your REST API returns to the client.
+
+✅ Why It’s Useful
+
+Custom HTTP Status Codes → Return 200, 201, 404, 500, etc.
+
+Custom Headers → Add response headers if needed.
+
+Flexible Body → Return any type of data (JSON, String, Object).
+
+Error Handling → Standardize error responses with proper status codes.
+
+_________________________________________________________________________________________________________________________________________________________________________________________________________________
+
+What is Spring Data JPA?
+
+Spring Data JPA — is a part of the Spring Data framework that simplifies working with relational databases using JPA (Java Persistence API).
+
+💡 It removes boilerplate DAO (Data Access Object) code by providing ready-made repository interfaces and query methods.
+
+✅ Key Features
+
+Automatic CRUD operations — via JpaRepository or CrudRepository.
+
+Derived query methods — like findByName(), findByEmailContaining().
+
+Custom JPQL/native queries — with @Query.
+
+Pagination & sorting — built-in support using Pageable and Sort.
+
+Transaction management — handled automatically by Spring.
+
+_________________________________________________________________________________________________________________________________________________________________________________________________________________
+
+How does Spring Boot simplify JPA implementation?
+
+1. Auto-Configuration
+
+Spring Boot automatically configures JPA components like:
+
+EntityManagerFactory
+
+DataSource
+
+TransactionManager
+
+It detects spring-boot-starter-data-jpa on the classpath and configures everything automatically.
+
+✅ No XML or manual persistence.xml setup needed!
+
+2. Embedded Database Support
+
+Works instantly with in-memory databases (H2, HSQL, Derby).
+
+Just add dependency → Boot auto-creates DB, schema, and tables.
+
+3. Simplified Dependencies
+
+4. Repository Abstraction
+
+No need to write DAO code — just extend JpaRepository or CrudRepository.
+
+5. Auto Schema Management
+
+Property spring.jpa.hibernate.ddl-auto handles schema creation:
+
+create, update, validate, none.
+
+✅ 6. Integrated Transaction Management
+
+Spring Boot automatically enables transaction management via @Transactional.
+
+✅ 7. Built-in SQL Logging
+
+_________________________________________________________________________________________________________________________________________________________________________________________________________________
+
+What is the role of @Entity annotation?
+
+@Entity — is a JPA annotation used to mark a Java class as a database entity (a table in the database).
+
+💡 It tells the JPA provider (like Hibernate) that this class should be mapped to a database table, and its fields should map to table columns.
+
+✅ Key Points
+
+The class must have a no-arg constructor (can be default).
+
+Must have an @Id field — the primary key.
+
+The table name defaults to the class name (can be customized with @Table).
+
+_________________________________________________________________________________________________________________________________________________________________________________________________________________
+
+What is the use of @Id and @GeneratedValue?
+
+@Id and @GeneratedValue are JPA annotations used to define and control how the primary key of an entity is generated.
+
+✅ 1. @Id
+
+Marks a field as the primary key of the entity (unique identifier for each record).
+
+Must be present in every entity class.
+
+2. @GeneratedValue
+
+Used along with @Id to specify how the primary key value is automatically generated.
+
+Common Strategies:
+
+Strategy			Description																Example
+
+AUTO (default)		Lets JPA choose the best strategy based on the database.				@GeneratedValue(strategy = GenerationType.AUTO)
+
+IDENTITY			Relies on database auto-increment columns.								@GeneratedValue(strategy = GenerationType.IDENTITY)
+
+SEQUENCE			Uses a database sequence object.										@GeneratedValue(strategy = GenerationType.SEQUENCE)
+
+TABLE				Uses a table to generate unique IDs (less common).						@GeneratedValue(strategy = GenerationType.TABLE)
+
+_________________________________________________________________________________________________________________________________________________________________________________________________________________
+
+What is JpaRepository?
+
+JpaRepository — is a Spring Data interface that provides built-in methods for performing CRUD (Create, Read, Update, Delete) operations and pagination/sorting on JPA entities.
+
+💡 It’s part of Spring Data JPA and extends both PagingAndSortingRepository and CrudRepository, giving you full access to database operations without writing SQL or boilerplate DAO code.
+
+✅ Key Features
+
+Provides ready-to-use CRUD methods:
+
+save(), findById(), findAll(), deleteById(), etc.
+
+Supports pagination and sorting (Pageable, Sort).
+
+Allows custom finder methods (e.g., findByName()).
+
+Allows JPQL or native SQL queries via @Query.
+
+_________________________________________________________________________________________________________________________________________________________________________________________________________________
+
+Difference between CrudRepository, PagingAndSortingRepository, and JpaRepository?
+
+Difference — CrudRepository vs PagingAndSortingRepository vs JpaRepository
+
+Quick summary (hierarchy):
+
+CrudRepository ← PagingAndSortingRepository ← JpaRepository
+
+(JpaRepository extends the others and adds JPA-specific features.)
+
+Key differences (short):
+
+CrudRepository
+
+Purpose: Basic CRUD operations.
+
+Core methods: save(), findById(), existsById(), findAll(), count(), deleteById().
+
+Use when: you only need simple create/read/update/delete.
+
+PagingAndSortingRepository
+
+Extends: CrudRepository.
+
+Adds: pagination & sorting support.
+
+Core methods: findAll(Pageable pageable), findAll(Sort sort).
+
+Use when: you need to return paged or sorted results.
+
+JpaRepository
+
+Extends: PagingAndSortingRepository.
+
+Adds: JPA-specific operations and conveniences.
+
+Useful methods: flush(), saveAndFlush(), deleteInBatch() (or deleteAllInBatch()), getById() (lazy), plus richer findAll overloads.
+
+Use when: working with JPA/Hibernate and you want full-featured repository behavior.
+
+When to pick which:
+
+Start with JpaRepository for typical Spring Data JPA apps (covers everything).
+
+Pick PagingAndSortingRepository if you want to explicitly limit to paging/sorting features.
+
+Use CrudRepository for the smallest surface when only CRUD is needed.
+
+_________________________________________________________________________________________________________________________________________________________________________________________________________________
+
+What is the difference between @Query and derived queries?
+
+In Spring Data JPA, you can fetch data in two main ways:
+
+✅ Derived Queries (method-name-based)
+
+✅ @Query (custom queries)
+
+Here’s the clear difference —
+
+Aspect					Derived Query																		@Query Annotation
+
+Definition				Query is derived automatically from the method name.								Query is explicitly written using JPQL or SQL.
+
+Syntax					Method name follows a specific pattern like findBy, countBy, existsBy, etc.			Use @Query("JPQL or SQL query here") above the method.
+
+Flexibility				Limited to what method naming can express.											Fully customizable — can handle joins, complex conditions, etc.
+
+Performance Tuning		Not much control.																	You can fine-tune performance with joins, filters, projections.
+
+Native SQL Support		❌ Not directly.																	✅ Supports native queries with nativeQuery = true.
+
+_________________________________________________________________________________________________________________________________________________________________________________________________________________
+
+How do you perform transactions in Spring Boot?
+
+Transactions in Spring Boot — use Spring’s declarative @Transactional to manage transactions automatically (recommended).
+
+How it works (brief):
+
+Apply @Transactional at service (or method) level — Spring opens a transaction before the method and commits/rolls back after it.
+
+By default, runtime exceptions trigger rollback; checked exceptions do not unless configured.
+
+You can control propagation, isolation, readOnly, timeout, and rollback rules via @Transactional attributes.
+
+Important attributes (one-liners):
+
+propagation — e.g. REQUIRED, REQUIRES_NEW (how transactions join/create).
+
+isolation — e.g. READ_COMMITTED, SERIALIZABLE (DB isolation level).
+
+readOnly=true — optimize for read-only operations.
+
+rollbackFor / noRollbackFor — specify exceptions that should (not) cause rollback.
+
+_________________________________________________________________________________________________________________________________________________________________________________________________________________
+
+What is @Transactional annotation used for?
+
+@Transactional — is used to manage database transactions automatically in Spring.
+
+💡 It ensures that a block of code (usually a service method) runs inside a transactional context — meaning all operations succeed or fail together (atomicity).
+
+✅ Main Purpose
+
+Begins a transaction when the method starts.
+
+Commits the transaction if the method completes successfully.
+
+Rolls back the transaction if a runtime exception (unchecked) occurs.
+
+_________________________________________________________________________________________________________________________________________________________________________________________________________________
+
+How do you handle relationships like OneToOne, OneToMany, and ManyToMany in JPA?
+
+One-to-One (@OneToOne)
+
+Use when one entity maps to exactly one other entity.
+
+Owning side uses @JoinColumn.
+
+Consider cascade and fetch (default EAGER).
+
+One-to-Many / Many-to-One (@OneToMany + @ManyToOne)
+
+Use when one parent has many children.
+
+ManyToOne is the owning side (stores FK).
+
+mappedBy on @OneToMany indicates inverse side.
+
+Default fetch for ManyToOne is EAGER, for OneToMany is LAZY.
+
+Many-to-Many (@ManyToMany)
+
+Use when many entities relate to many others.
+
+Use @JoinTable on the owning side to define the join table.
+
+Usually LAZY fetch; be careful with cascading to avoid large deletes.
+
+Practical tips (short)
+
+Prefer LAZY for collections to avoid N+1 and large fetches.
+
+Use cascade = CascadeType.ALL only when child lifecycle should follow parent.
+
+Use orphanRemoval = true to delete removed children automatically.
+
+Manage both sides of bidirectional relationships in code (set both parent.add(child) and child.setParent(parent)) to keep the object graph consistent.
+
+Consider DTOs for APIs to avoid exposing entities and to control fetched data.
+
+_________________________________________________________________________________________________________________________________________________________________________________________________________________
+
+What are entity lifecycle callbacks?
+
+Entity Lifecycle Callbacks — Definition
+
+Entity lifecycle callbacks are special methods in a JPA entity that are automatically invoked by the JPA provider (e.g., Hibernate) at specific points in the entity’s lifecycle — like before saving, after loading, before deleting, etc.
+
+💡 They allow you to perform custom logic (e.g., logging, auditing, validation) without manually calling those methods.
+
+Common Lifecycle Annotations
+
+Annotation			Trigger									Description
+
+@PrePersist			Before EntityManager.persist()			Before inserting a new record
+
+@PostPersist		After EntityManager.persist()			After record is inserted
+
+@PreUpdate			Before EntityManager.merge()			Before updating an existing record
+
+@PostUpdate			After EntityManager.merge()				After record is updated
+
+@PreRemove			Before EntityManager.remove()			Before deleting a record
+
+@PostRemove			After EntityManager.remove()			After record is deleted
+
+@PostLoad			After entity is loaded from the DB		After fetching entity data
+
+_________________________________________________________________________________________________________________________________________________________________________________________________________________
+
+What is a microservice?
+
+Microservice — is an architectural style where an application is divided into a collection of small, independent, and loosely coupled services — each responsible for a specific business function.
+
+💡 Each microservice is a self-contained unit that can be developed, deployed, and scaled independently.
+
+✅ Key Characteristics
+
+Independently Deployable – Each service can be updated or redeployed without affecting others.
+
+Single Responsibility – Each service handles one business capability (e.g., user service, payment service).
+
+Own Database – Services usually manage their own data (avoids shared schema).
+
+Communication via APIs – Typically uses REST, gRPC, or message queues (e.g., RabbitMQ, Kafka).
+
+Technology Independence – Each service can use different languages or databases if needed.
+
+Scalability – Services can scale individually based on load.
+
+Advantages
+
+🧩 Loose Coupling — Easier maintenance and testing.
+
+🚀 Independent Deployment — Deploy one service without redeploying the entire app.
+
+📈 Scalability — Scale only the services that need more resources.
+
+🔒 Resilience — Failure in one service doesn’t crash the whole system.
+
+⚙️ Tech Flexibility — Choose the best tool for each service.
+
+⚠️ Challenges
+
+Complex communication (needs API Gateway, Service Discovery).
+
+Data consistency (each service has its own DB).
+
+More DevOps overhead (CI/CD, monitoring, logging).
+
+_________________________________________________________________________________________________________________________________________________________________________________________________________________
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+_________________________________________________________________________________________________________________________________________________________________________________________________________________
+
+What is a Singleton Class?
+
+A Singleton class is a class that allows only one instance (object) to be created in the entire Java application.
+
+✅ Key Points:
+
+Only one instance exists in memory.
+
+Provides a global access point to that instance.
+
+Commonly used for:
+
+Logging
+
+Caching
+
+Database connections
+
+Configuration managers
+
+_________________________________________________________________________________________________________________________________________________________________________________________________________________
