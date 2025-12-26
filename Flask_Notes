@@ -1,0 +1,358 @@
+What is Flask?
+
+Flask is a lightweight and flexible Python web framework used to build web applications and APIs. It’s called a “micro-framework” because it doesn’t include built-in tools like ORM or form validation — instead, you can add only what you need using extensions (like SQLAlchemy, Flask-Login, etc.).
+
+Key features: simplicity, minimal setup, built-in development server, Jinja2 templating, and support for RESTful routing.
+
+Use case: ideal for small to medium applications or microservices where fine control over components is needed.
+
+Flask is minimal, extensible, and great for rapid web API development.
+
+_________________________________________________________________________________________________________________________________________________________________________________________________________________
+
+What are the key features of Flask?
+
+Key Features of Flask:
+
+Lightweight & Modular – Core is simple; you add only what you need via extensions.
+
+Built-in Development Server & Debugger – Helps test and debug easily.
+
+Routing – Uses decorators (@app.route) for clean URL mapping.
+
+Jinja2 Templating – Powerful template engine for rendering dynamic HTML.
+
+RESTful Request Handling – Easy to build APIs using HTTP methods (GET, POST, etc.).
+
+Integrated Unit Testing Support – Includes test client for quick API testing.
+
+Extension Support – Add features like authentication, ORM, forms, etc. (e.g., Flask-Login, Flask-SQLAlchemy).
+
+WSGI Compatibility – Built on Werkzeug, making it production-ready with WSGI servers like Gunicorn.
+
+_________________________________________________________________________________________________________________________________________________________________________________________________________________
+
+What is the difference between Flask and Django?
+
+Aspect			Flask													Django
+
+Type			Micro-framework											Full-stack framework
+
+Architecture	Lightweight and flexible; add only what you need		Batteries-included; comes with ORM, admin, auth, etc.
+
+Setup			Minimal setup, more manual work							Pre-configured structure (MVC/MVT)
+
+Database		No built-in ORM (use SQLAlchemy or others)				Built-in ORM
+
+Flexibility		Very high – choose components freely					Lower – follows Django’s conventions
+
+Learning Curve	Easier for beginners									Steeper due to many built-in features
+
+Use Case		Small/medium apps, microservices, APIs					Large, complex, enterprise-level apps
+
+_________________________________________________________________________________________________________________________________________________________________________________________________________________
+
+What is a WSGI application?
+
+WSGI (Web Server Gateway Interface) is a specification that defines how a web server communicates with a Python web application. It acts as a bridge between the web server (like Gunicorn or uWSGI) and your Flask app.
+
+Flask apps are WSGI-compliant, meaning any WSGI server can run them. Flask itself uses Werkzeug, which implements the WSGI standard.
+
+_________________________________________________________________________________________________________________________________________________________________________________________________________________
+
+How do you create a simple Flask “Hello World” app?
+
+from flask import Flask
+
+app = Flask(__name__)  # Create Flask application
+
+@app.route('/')        # Define a route
+
+def hello():
+
+    return "Hello, World!"
+
+if __name__ == '__main__':
+
+    app.run(debug=True)  # Run development server
+
+Steps:
+
+Import Flask and create an app instance.
+
+Define a route (@app.route('/')) and a view function.
+
+Run the app with app.run().
+
+_________________________________________________________________________________________________________________________________________________________________________________________________________________
+
+What is the use of app.run() in Flask?
+
+The app.run() method is used to start the Flask development server and run your web application locally.
+
+app.run(host='127.0.0.1', port=5000, debug=True)
+
+Parameters:
+
+host → Defines where the app runs (default: '127.0.0.1' → localhost).
+
+port → Port number (default: 5000).
+
+debug → Enables auto-reload and detailed error messages during development.
+
+_________________________________________________________________________________________________________________________________________________________________________________________________________________
+
+What is the role of the __name__ == "__main__" condition in Flask?
+
+The condition if __name__ == "__main__": ensures that the Flask app runs only when the script is executed directly, not when it’s imported as a module in another file.
+
+When you run this file directly → __name__ = "__main__", so app.run() starts the server.
+
+When imported → __name__ = module name, so the server doesn’t start automatically.
+
+_________________________________________________________________________________________________________________________________________________________________________________________________________________
+
+What is route() in Flask?
+
+The @app.route() decorator in Flask is used to map a URL path to a specific function (called a view function). When a user visits that URL, Flask runs the associated function and returns its response.
+
+_________________________________________________________________________________________________________________________________________________________________________________________________________________
+
+How do you create dynamic URLs in Flask (using route parameters)?
+
+You can create dynamic URLs in Flask by adding route parameters inside angle brackets (<>) in the @app.route() decorator. These parameters are passed as function arguments
+
+Type converters can also be used:
+
+<int:id> → integer
+
+<float:price> → float
+
+<path:subpath> → full path
+
+_________________________________________________________________________________________________________________________________________________________________________________________________________________
+
+How do you handle GET and POST requests in Flask?
+
+In Flask, you handle GET and POST requests using the methods parameter in the @app.route() decorator and the request object to access data.
+
+_________________________________________________________________________________________________________________________________________________________________________________________________________________
+
+What is the difference between request.args and request.form?
+
+In Flask, both request.args and request.form are used to access data sent from the client, but they differ by how the data is sent:
+
+Attribute		Used For				Data Source						Example URL / Form
+
+request.args	Query parameters		Data sent via URL (GET)			/search?name=Sarah
+
+request.form	Form data				Data sent via POST request		HTML <form method="POST">
+
+from flask import request
+
+@app.route('/data', methods=['GET', 'POST'])
+
+def data():
+
+    if request.method == 'GET':
+
+        name = request.args.get('name')   # ?name=Sarah
+    else:
+
+        name = request.form.get('name')   # form field
+
+    return f"Hello, {name}!"
+
+_________________________________________________________________________________________________________________________________________________________________________________________________________________
+
+How do you access JSON data in a Flask request?
+
+You can access JSON data in a Flask request using request.get_json(). It parses the incoming request body (when content type is application/json) into a Python dictionary.
+
+_________________________________________________________________________________________________________________________________________________________________________________________________________________
+
+What are URL converters in Flask routes?
+
+URL converters in Flask let you define the type and format of dynamic route parameters in your URLs. They ensure the parameter is automatically converted to the specified type before reaching your view function.
+
+Common Converters:
+
+Converter				Description						Example
+
+string (default)		Accepts any text (no /)			/user/<string:name>
+
+int						Accepts integers only			/post/<int:id>
+
+float					Accepts floating-point numbers	/price/<float:value>
+
+path					Like string but allows /		/files/<path:subpath>
+
+uuid					Accepts UUID strings			/item/<uuid:item_id>
+
+_________________________________________________________________________________________________________________________________________________________________________________________________________________
+
+What is url_for() and why is it preferred over hardcoding URLs?
+
+The url_for() function in Flask is used to generate URLs dynamically for a given view function name instead of hardcoding them in templates or code.
+
+Why it’s preferred:
+
+✅ Avoids broken links — URLs update automatically if routes change.
+
+✅ Keeps code maintainable and consistent.
+
+✅ Supports passing parameters for dynamic routes.
+
+_________________________________________________________________________________________________________________________________________________________________________________________________________________
+
+How do you redirect users to another route?
+
+In Flask, you can redirect users to another route using the redirect() function, often combined with url_for() to generate the target URL dynamically.
+
+Key Points:
+
+redirect() sends an HTTP 302 (Found) response by default.
+
+You can specify other status codes like redirect(url_for('home'), 301) for permanent redirects.
+
+_________________________________________________________________________________________________________________________________________________________________________________________________________________
+
+What are Blueprints in Flask and why do we use them?
+
+Blueprints in Flask are a way to organize your application into reusable, modular components — like separating routes, views, and logic by feature or module.
+
+They help in building large applications by grouping related routes, templates, and static files together.
+
+Why use Blueprints:
+
+Better code organization and modularity
+
+Easier maintenance and scalability
+
+Supports reusability across multiple projects
+
+_________________________________________________________________________________________________________________________________________________________________________________________________________________
+
+What is Jinja2 in Flask?
+
+Jinja2 is the templating engine used by Flask to generate dynamic HTML pages. It allows embedding Python-like expressions inside HTML using special syntax — making it easy to display data and control logic in templates.
+
+Key Features:
+
+Template inheritance ({% extends %}, {% block %})
+
+Variables ({{ variable }})
+
+Control structures ({% if %}, {% for %})
+
+Filters ({{ name|upper }})
+
+_________________________________________________________________________________________________________________________________________________________________________________________________________________
+
+How do you pass data from Flask to an HTML template?
+
+You can pass data from Flask to an HTML template using the render_template() function. It sends variables from your Flask view to the Jinja2 template, where they can be displayed dynamically.
+
+_________________________________________________________________________________________________________________________________________________________________________________________________________________
+
+How do you include one template in another in Flask?
+
+In Flask (via Jinja2), you can include one template inside another using the {% include %} statement — useful for reusing common parts like headers, footers, or navigation bars.
+
+_________________________________________________________________________________________________________________________________________________________________________________________________________________
+
+What are Jinja2 control structures?
+
+Jinja2 control structures let you add logic (conditions, loops, etc.) inside Flask templates — similar to Python’s control flow, but within HTML. They’re enclosed in {% ... %} tags.
+
+Common Control Structures:
+
+If / Else
+
+For Loop
+
+Template Inheritance Blocks
+
+Macros (like reusable functions)
+
+_________________________________________________________________________________________________________________________________________________________________________________________________________________
+
+How do you escape HTML in Jinja2 templates?
+
+In Jinja2, HTML escaping prevents malicious code (like cross-site scripting — XSS) from being executed by automatically converting special characters into safe HTML entities.
+
+By default, Jinja2 auto-escapes variables in templates rendered via render_template().
+
+If you want to allow HTML rendering, use the |safe filter:
+
+_________________________________________________________________________________________________________________________________________________________________________________________________________________
+
+What is template inheritance in Flask?
+
+Template inheritance in Flask is a feature that allows you to create a base (parent) template and let other templates extend it — reusing common HTML structure (like headers, navigation bars, and footers) across multiple pages.
+
+It helps avoid repeating the same code and keeps your HTML organized and maintainable.
+
+🔹 How it works
+
+Flask uses Jinja2 (its template engine), which supports template inheritance with the {% extends %} and {% block %} tags.
+
+Explanation
+
+{% extends "base.html" %}
+
+→ Inherits all content from the base template.
+
+{% block ... %}{% endblock %}
+
+→ Defines sections that child templates can override (e.g., title, content).
+
+_________________________________________________________________________________________________________________________________________________________________________________________________________________
+
+How do you manage sessions in Flask?
+
+Default Flask sessions = signed cookies — simple and fine for small, non-sensitive items (user id).
+
+Server-side sessions = better for security, revocation, large payloads (use Redis + Flask-Session).
+
+Use Flask-Login for authentication flow, and follow cookie/security best practices (HTTPS, HTTPOnly, SameSite, short lifetimes).
+
+_________________________________________________________________________________________________________________________________________________________________________________________________________________
+
+What is session in Flask and how does it work?
+
+A session in Flask is a way to store data specific to a user across multiple HTTP requests.
+
+Since HTTP is stateless (every request is independent), Flask uses sessions to remember information like:
+
+Logged-in user details
+
+Preferences
+
+Shopping cart contents
+
+🔹 How It Works (Behind the Scenes)
+
+By default, Flask stores session data on the client-side, inside a secure cookie — this is possible through Flask’s integration with the Jinja2 templating engine and the itsdangerous library (for signing cookies).
+
+Here’s the basic mechanism:
+
+When you set data in the session object (e.g., session['username'] = 'Sarah'), Flask serializes that data and stores it in a cookie sent to the browser.
+
+The cookie is digitally signed using your app’s SECRET_KEY so that:
+
+The client cannot modify it (if they try, the signature won’t match).
+
+The server can trust the data when it comes back.
+
+On subsequent requests, Flask:
+
+Reads the session cookie from the client.
+
+Verifies the signature.
+
+Deserializes it back into a Python dictionary (session).
+
+So, each request has access to the same session data until the cookie expires or is cleared.
+
+_________________________________________________________________________________________________________________________________________________________________________________________________________________
