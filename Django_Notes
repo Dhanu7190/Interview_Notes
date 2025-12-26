@@ -1,0 +1,657 @@
+What is Django?
+
+Django is a high-level, open-source Python web framework that enables developers to build secure, scalable, 
+
+and maintainable web applications rapidly.
+
+It follows the MVT (Model–View–Template) architectural pattern and includes many batteries-included features such as:
+
+ORM (Object-Relational Mapper)
+
+Authentication system
+
+Admin interface
+
+URL routing
+
+Form handling
+
+Security features (CSRF protection, XSS protection, SQL injection prevention)
+
+Caching, middleware, sessions, and more
+
+Django’s philosophy is "Don't Repeat Yourself" (DRY) and "batteries included", meaning it ships with almost 
+
+everything needed for modern web development.
+
+_____________________________________________________________________________________________________________________________________________________
+
+What are the key features of Django?
+
+Django is a high-level Python web framework with several powerful features, including:
+
+MVT Architecture – Clean separation of data, logic, and presentation.
+
+Built-in ORM – Allows database operations using Python instead of SQL.
+
+Auto-generated Admin Panel – Ready-to-use backend dashboard.
+
+Strong Security – Protection against CSRF, XSS, SQL injection, etc.
+
+Batteries-Included – Comes with authentication, routing, forms, sessions, caching, and more.
+
+Scalability – Suitable for high-traffic apps like Instagram.
+
+URL Routing System – Clean and maintainable URL configuration.
+
+Excellent Documentation – Easy to learn and well-maintained.
+
+Large Ecosystem – Many third-party packages (e.g., DRF, Channels).
+
+_____________________________________________________________________________________________________________________________________________________
+
+Explain Django’s MVT Architecture.
+
+Django follows the MVT architecture, which stands for Model–View–Template. It works like this:
+
+Model
+
+Handles the data layer. It defines the database structure and interacts with the ORM.
+
+View:
+
+Contains the business logic. It processes requests, fetches data from the model, and sends the data to the template.
+
+Template:
+
+Responsible for the presentation layer. It displays the data to the user using HTML with Django template tags.
+
+_____________________________________________________________________________________________________________________________________________________
+
+What is a Django Model?
+
+A Django model is a Python class that represents a table in the database. Each attribute of the class corresponds to a database field, 
+
+and Django automatically creates the table structure using migrations.
+
+Models allow you to interact with the database using Django’s ORM, so you can perform operations like create, read, 
+
+update, delete without writing SQL manually.
+
+_____________________________________________________________________________________________________________________________________________________
+
+What is a QuerySet in Django?
+
+A QuerySet is a collection of data retrieved from the database using Django’s ORM. 
+
+It represents a set of objects and allows you to filter, sort, slice, and query data efficiently.
+
+QuerySets are lazy, meaning Django doesn't hit the database until the data is actually needed.
+
+_____________________________________________________________________________________________________________________________________________________
+
+What is the difference between get() and filter() in Django ORM?
+
+get() returns a single object that matches the query.
+
+If no object or more than one object is found, it raises an error.
+
+filter() returns a QuerySet (multiple objects) and never raises an error, even if the result is empty.
+
+_____________________________________________________________________________________________________________________________________________________
+
+What are Django views?
+
+Django views are Python functions or class-based methods that handle incoming requests and return responses.
+
+They contain the business logic of your application—fetching data from the model, processing it, and passing it to templates or returning JSON.
+
+_____________________________________________________________________________________________________________________________________________________
+
+What are Django templates?
+
+Django templates are HTML files that allow you to display dynamic data using Django’s template language.
+
+They separate the presentation layer from the business logic.
+
+Templates support variables, filters, loops, conditions, and template inheritance.
+
+_____________________________________________________________________________________________________________________________________________________
+
+What is manage.py used for?	
+
+manage.py is a command-line utility that helps you interact with your Django project.
+
+It allows you to run commands like starting the server, creating apps, running migrations, creating superusers, and more.
+
+It automatically sets the correct DJANGO_SETTINGS_MODULE for your project so you don’t have to configure it manually.
+
+_____________________________________________________________________________________________________________________________________________________
+
+How do you create a Django project and app?
+
+To create a Django project, you use the django-admin startproject command.
+
+To create an app inside that project, you use the python manage.py startapp command.
+
+_____________________________________________________________________________________________________________________________________________________
+
+What is the purpose of settings.py?
+
+settings.py contains all the configuration for your Django project.
+
+This includes database settings, installed apps, middleware, static files configuration, templates, security keys, allowed hosts, and more.
+
+It is the central place where Django reads project-wide settings during startup.
+
+_____________________________________________________________________________________________________________________________________________________
+
+What is urls.py? (Interview Answer)
+
+urls.py is the file in Django where you define the URL routing for your project or app.
+
+It maps URLs (like /home/, /products/) to views, so Django knows which view to execute when a user visits a particular URL.
+
+_____________________________________________________________________________________________________________________________________________________
+
+How do you connect Django with a database?
+
+Django connects to a database through the DATABASES setting inside settings.py.
+
+You just specify the database engine, name, user, password, host, and port.
+
+Django uses this configuration to automatically handle migrations and ORM queries.
+
+_____________________________________________________________________________________________________________________________________________________
+
+What are static files in Django?
+
+Static files are files that don’t change dynamically and are served as-is.
+
+Examples include CSS, JavaScript, images, fonts, etc.
+
+Django provides a static files framework to help you collect and serve these assets during development and production.
+
+_____________________________________________________________________________________________________________________________________________________
+
+What are media files in Django?
+
+Media files are user-uploaded files such as images, videos, documents, and audio.
+
+They are different from static files because static files are for the project (CSS/JS), while media files come from users.
+
+Django allows you to configure a media directory and serve uploaded files during development.
+
+_____________________________________________________________________________________________________________________________________________________
+
+What is the Django admin site?
+
+The Django admin site is a built-in, automatically generated backend interface that allows you to manage your project’s data.
+
+It provides CRUD operations for your models without writing any code.
+
+You can add, edit, delete, and search records easily.
+
+It’s mainly used by developers and staff—not end users.
+
+_____________________________________________________________________________________________________________________________________________________
+
+What is urlpatterns?
+
+urlpatterns is a Python list in urls.py that contains all the URL routes of your Django project or app.
+
+Each entry in the list maps a URL path to a specific view.
+
+Django checks this list to decide which view should handle an incoming request.
+
+_____________________________________________________________________________________________________________________________________________________
+
+What is a Django Form?
+
+A Django form is a Python class used to handle user input, such as data from HTML forms.
+
+Forms help with validation, error handling, and cleaning input before saving it to the database.
+
+Django provides both:
+
+Forms → manually define form fields
+
+ModelForms → automatically create a form from a model
+
+_____________________________________________________________________________________________________________________________________________________
+
+What is the difference between Django Form and ModelForm? (Interview Answer)
+
+Django Form:
+
+You manually define every field. It is not linked to any model.
+
+Useful for custom input that doesn't directly map to a database table.
+
+ModelForm:
+
+Automatically creates form fields based on a Django model.
+
+Saves data directly to the database with .save().
+_____________________________________________________________________________________________________________________________________________________
+
+How does Django handle sessions?
+
+Django handles sessions by storing session data on the server and saving only a session ID in the user’s browser as a cookie.
+
+This allows Django to keep track of each user’s data across multiple requests (like login info, cart items, preferences).
+
+Django uses its built-in session middleware and supports several storage backends:
+
+Database (default)
+
+Cache
+
+File-based
+
+Signed cookies
+
+_____________________________________________________________________________________________________________________________________________________
+
+What is Django middleware?
+
+Django middleware is a lightweight processing layer that sits between the request and response cycle.
+
+It allows you to process requests before they reach the view and process responses before they reach the browser.
+
+Middleware is used for tasks such as:
+
+Authentication
+
+Session handling
+
+CSRF protection
+
+Caching
+
+Request/response logging
+
+Custom security checks
+
+_____________________________________________________________________________________________________________________________________________________
+
+How can you create custom middleware?
+
+You create custom middleware by writing a Python callable (usually a class) that intercepts requests and/or responses, 
+
+implement the appropriate hooks (process_request, process_view, process_exception, process_response) or the new __call__-based interface,
+
+and then add the middleware path to MIDDLEWARE in settings.py.
+
+Middleware is used for global cross-cutting concerns like logging, auth checks, headers, rate-limiting, maintenance mode, etc.
+
+_____________________________________________________________________________________________________________________________________________________
+
+What is context in Django templates?
+
+Context is a dictionary of data that you pass from a view to a template.
+
+The template uses this context to display dynamic content.
+
+In other words, context is how views send data to the HTML page.
+
+_____________________________________________________________________________________________________________________________________________________
+
+What are template inheritance and template tags?
+
+Template Inheritance
+
+Template inheritance in Django allows you to create a base template (with common layout like header, footer, navbar) and 
+
+let child templates override only specific blocks.
+
+It helps avoid repeating HTML and keeps templates clean and maintainable.
+
+Template Tags
+
+Template tags are special Django commands used inside templates for:
+
+loops
+
+conditions
+
+loading static files
+
+including templates
+
+custom logic
+
+They add dynamic behavior inside HTML pages.
+
+
+_____________________________________________________________________________________________________________________________________________________
+
+What is the reverse() function in Django?
+
+The reverse() function is used to get the URL of a view by its name, instead of hardcoding the URL path.
+
+It helps avoid broken links when URLs change and is commonly used in redirects, templates, and class-based views.
+
+_____________________________________________________________________________________________________________________________________________________
+
+What is select_related and prefetch_related?
+
+Both select_related and prefetch_related are Django ORM optimization methods used to 
+
+reduce the number of database queries when working with related models
+
+1. select_related
+
+Used for foreign key and one-to-one relationships.
+
+Performs a SQL JOIN and fetches related objects in one query.
+
+Faster for single-valued relationships.
+
+2. prefetch_related
+
+Used for many-to-many and reverse foreign key relations.
+
+Performs two separate queries and merges results in Python.
+
+Ideal for lists/collections of related objects.
+_____________________________________________________________________________________________________________________________________________________
+
+What is a Django Signal? (Interview Answer)
+
+A Django signal is a notification system that allows certain parts of your application to get automatically notified 
+
+when specific actions happen—such as object creation, update, deletion, or user login.
+
+Signals help you run code automatically when an event occurs, without modifying the core logic.
+
+Common built-in signals:
+
+post_save
+
+pre_save
+
+post_delete
+
+user_logged_in
+
+user_logged_out
+_____________________________________________________________________________________________________________________________________________________
+
+How do you implement user authentication in Django?
+
+Django provides a built-in authentication system. You implement authentication by using the built-in User model (or a custom AUTH_USER_MODEL), 
+
+the authenticate() and login() helpers, and decorators/mixins like login_required / LoginRequiredMixin. 
+
+For common flows you can use UserCreationForm (registration) and AuthenticationForm (login). Use logout() to sign out. 
+
+Protect views with permissions or groups when needed.
+
+_____________________________________________________________________________________________________________________________________________________
+
+How do you override Django’s default User model?
+
+You override Django’s default User model by creating a custom user model using either:
+
+AbstractUser → Extend the existing User model (recommended, most common)
+
+AbstractBaseUser → Build your own user model from scratch (advanced)
+
+_____________________________________________________________________________________________________________________________________________________
+
+What are class-based views (CBVs)?
+
+Class-Based Views (CBVs) are Django views written as Python classes instead of functions.
+
+They provide reusable logic by offering built-in methods for common tasks like listing objects, displaying details, 
+
+creating, updating, and deleting records.
+
+CBVs help you write cleaner, organized, and reusable code by using inheritance and mixins.
+
+_____________________________________________________________________________________________________________________________________________________
+
+What is the difference between ListView and DetailView?
+
+ListView is used to display a list of objects, while DetailView is used to display the details of a single object.
+
+ListView → returns multiple objects (QuerySet)
+
+DetailView → returns one object (based on id/slug/pk)
+
+_____________________________________________________________________________________________________________________________________________________
+
+How to upload files in Django?
+
+Use a FileField or ImageField on a model, accept files in a form (make sure the form uses enctype="multipart/form-data"), handle request.
+
+FILES in the view (or use a ModelForm), and configure MEDIA_ROOT/MEDIA_URL in settings.py. In development, 
+
+serve media via django.conf.urls.static.static. For production, use a proper media storage (S3, CDN) and validate file size/type.
+
+_____________________________________________________________________________________________________________________________________________________
+
+How do you implement pagination?
+
+Use Django’s pagination utilities. For generic views set paginate_by on a ListView. 
+
+For function-based views use django.core.paginator.Paginator to split a queryset into pages and read the page number from the request (?page=2). 
+
+Always handle invalid page numbers (EmptyPage, PageNotAnInteger).
+
+In short: use ListView.paginate_by for quick setup or Paginator for custom control.
+
+_____________________________________________________________________________________________________________________________________________________
+
+What is the Django ORM?
+
+The Django ORM (Object–Relational Mapper) allows you to interact with the database using Python code instead of SQL.
+
+It converts Python model operations into SQL queries automatically.
+
+You can create, retrieve, update, and delete records without writing any SQL manually.
+
+It supports multiple databases like PostgreSQL, MySQL, SQLite, Oracle, and makes switching databases easy.
+
+_____________________________________________________________________________________________________________________________________________________
+
+How to perform raw SQL queries in Django?
+
+Django allows raw SQL queries using three main approaches:
+
+Model.objects.raw() → for SELECT queries that map to a model
+
+connection.cursor() → for executing INSERT, UPDATE, DELETE, or custom SQL
+
+Extra() (deprecated) → not recommended anymore
+
+Even when using raw SQL, Django still protects against SQL injection using query parameters.
+_____________________________________________________________________________________________________________________________________________________
+
+What is a slug and how is it used?
+
+A slug is a URL-friendly string (usually derived from a title) used to create clean, readable, SEO-friendly URLs.
+
+It contains only letters, numbers, hyphens, and underscores.
+
+_____________________________________________________________________________________________________________________________________________________
+
+What are the different types of model relationships?
+
+Django supports three main types of model relationships:
+
+One-to-One Relationship → OneToOneField
+
+One-to-Many Relationship → ForeignKey
+
+Many-to-Many Relationship → ManyToManyField
+
+These relationships define how models connect to each other in the database.
+_____________________________________________________________________________________________________________________________________________________
+
+What is the difference between null=True and blank=True?
+
+null=True → Database-level
+
+It means the database column can store NULL.
+
+Used for non-string fields (Integer, Date, ForeignKey, etc.)
+
+blank=True → Validation-level
+
+It means the field can be left empty in forms (admin, Django forms, ModelForms).
+
+Used when you want the form to accept empty input.
+
+_____________________________________________________________________________________________________________________________________________________
+
+What is caching in Django?
+
+Caching in Django means storing frequently-used data in memory (or another fast storage) so that future requests can be served quickly 
+
+without hitting the database each time.
+
+Django provides multiple caching backends like Memcached, Redis, file-based cache, and local-memory cache.
+
+Caching improves performance, reduces database load, and speeds up page rendering.
+
+_____________________________________________________________________________________________________________________________________________________
+
+What is Django REST Framework (DRF)?
+
+Django REST Framework (DRF) is a powerful and flexible toolkit for building Web APIs in Django.
+
+It provides an easy way to serialize data, handle authentication, create API endpoints, and support features like pagination, permissions, 
+
+filters, and browsable API interfaces.
+
+DRF makes it simple to build RESTful APIs that interact with mobile apps, front-end frameworks (React, Angular, Vue), and other services.
+
+_____________________________________________________________________________________________________________________________________________________
+
+What is the difference between WSGI and ASGI in Django?
+
+WSGI and ASGI are two different server interfaces used by Django to handle requests.
+
+🔵 WSGI (Web Server Gateway Interface)
+
+Older, traditional interface
+
+Supports only synchronous (blocking) requests
+
+Used for classic Django apps before Django 3.0
+
+Works well for typical web pages and APIs
+
+🟢 ASGI (Asynchronous Server Gateway Interface)
+
+Modern interface
+
+Supports both synchronous and asynchronous requests
+
+Enables real-time features: WebSockets, long-polling, async tasks
+
+Django supports ASGI from version 3.0+
+
+_____________________________________________________________________________________________________________________________________________________
+
+How does Django handle asynchronous views?
+
+Django (3.1+) supports asynchronous views, allowing you to write views using async def.
+
+These views run on Django’s ASGI layer and let you perform non-blocking operations such as calling async APIs, making async database 
+
+queries (when supported), or running long I/O tasks without blocking the server.
+
+Django automatically detects whether a view is synchronous or asynchronous and handles them appropriately.
+
+_____________________________________________________________________________________________________________________________________________________
+
+Explain how Django’s ORM handles transactions.
+
+Django’s ORM automatically wraps each HTTP request inside a transaction when ATOMIC_REQUESTS is enabled, or you can manually control transactions 
+
+using transaction.atomic().
+
+If everything inside the block runs successfully, Django commits the changes to the database; if an exception occurs, Django rolls back the entire 
+
+block to keep data consistent.
+
+Django guarantees ACID properties: Atomicity, Consistency, Isolation, Durability.
+
+_____________________________________________________________________________________________________________________________________________________
+
+What are database migrations? How do they work internally?
+
+Database migrations in Django are a way to keep your database schema in sync with your models.
+
+Whenever you change a model (add a field, delete a model, rename a column), Django generates a migration file that describes the changes.
+
+You apply these changes to the actual database using:
+
+python manage.py makemigrations
+
+python manage.py migrate
+
+_____________________________________________________________________________________________________________________________________________________
+
+What is the role of Celery in Django?
+
+Celery is a distributed task queue used in Django to run background tasks asynchronously, outside the normal request–response cycle.
+
+It is perfect for tasks that take time (email sending, PDF generation, API calls, image processing) so they don’t block the user or slow down your app.
+
+Celery works with a message broker (RabbitMQ or Redis) and Django acts as the producer sending tasks to workers.
+
+_____________________________________________________________________________________________________________________________________________________
+
+How do you secure a Django application?
+
+Secure a Django app by running with DEBUG=False, using HTTPS, protecting secrets, enabling Django’s security settings/cookies/CSRF protections, 
+
+validating inputs, hardening auth, limiting access (admin/IP/rate-limit), keeping dependencies and Django up-to-date, and monitoring/logging for 
+
+attacks.
+
+_____________________________________________________________________________________________________________________________________________________
+
+How does Django handle cross-site request forgery (CSRF)?
+
+Django protects against CSRF attacks using the CSRF middleware and a unique CSRF token.
+
+This token is added to every form that performs POST requests. When the form is submitted, Django checks if the token matches the one stored 
+
+in the user’s session.
+
+If the token is missing, invalid, or tampered with, Django blocks the request.
+
+_____________________________________________________________________________________________________________________________________________________
+
+What are custom model managers?
+
+Custom model managers in Django allow you to add extra query methods or customize the default queryset for a model.
+
+They help organize repeated database logic in one place instead of writing the same filters in multiple views.
+
+Every Django model has a default manager called objects, but you can override it or create additional managers.
+
+_____________________________________________________________________________________________________________________________________________________
+
+What are signals vs observers? When to use or avoid them?
+
+Custom model managers in Django allow you to add extra query methods or customize the default queryset for a model.
+
+They help organize repeated database logic in one place instead of writing the same filters in multiple views.
+
+Every Django model has a default manager called objects, but you can override it or create additional managers.
+
+_____________________________________________________________________________________________________________________________________________________
+
+
+
+
+
+
+
+
