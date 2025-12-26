@@ -1,0 +1,180 @@
+What are Python's built-in data types?
+
+1. Numeric Types
+
+int – Integer numbers (e.g., 10, -3)
+
+float – Decimal numbers (e.g., 3.14, -0.5)
+
+complex – Complex numbers (e.g., 2 + 3j)
+
+2. Sequence Types
+
+str – String (e.g., "Hello")
+
+list – Ordered, mutable collection (e.g., [1, 2, 3])
+
+tuple – Ordered, immutable collection (e.g., (1, 2, 3))
+
+3. Set Types
+
+set – Unordered, mutable collection of unique items (e.g., {1, 2, 3})
+
+frozenset – Immutable version of set
+
+4. Mapping Type
+
+dict – Key-value pairs (e.g., {"name": "Sarah", "age": 25})
+
+5. Boolean Type
+
+bool – True or False values
+
+6. Binary Types
+
+bytes – Immutable sequence of bytes
+
+bytearray – Mutable sequence of bytes
+
+memoryview – Memory view of binary data
+
+7. None Type
+
+NoneType – Represents absence of a value (None)
+
+_________________________________________________________________________________________________________________________________________________________________________________________________________________
+
+Differences between list and tuple.
+
+Here’s a concise comparison of List vs Tuple in Python 
+
+Feature													List																Tuple
+
+Syntax									Defined using square brackets [ ]										Defined using parentheses ( )
+
+Mutability								Mutable (can be changed)												Immutable (cannot be changed)
+
+Methods									Many built-in methods (e.g., append(), remove(), sort())				Fewer methods (e.g., count(), index())
+
+Performance								Slower (due to mutability)												Faster (due to immutability)
+
+Use case								Used when data needs to be changed										Used when data should remain constant
+
+Example									nums = [1, 2, 3]														nums = (1, 2, 3)
+
+_________________________________________________________________________________________________________________________________________________________________________________________________________________
+
+Mutable vs immutable — examples and why it matters.
+
+Mutable vs Immutable in Python
+
+Type				Definition															Examples										Can You Change It After Creation?
+
+Mutable				Objects that can be changed after creation						list, dict, set, bytearray								✅ Yes
+
+Immutable			Objects that cannot be changed after creation					int, float, str, tuple, frozenset, bool	   				❌ No
+
+_________________________________________________________________________________________________________________________________________________________________________________________________________________
+
+How does Python handle variable assignment? (names binding to objects)
+
+How Python Handles Variable Assignment
+
+In Python, variables don’t store data directly — they store references (names) to objects in memory.
+
+This concept is called “name binding.”
+
+_________________________________________________________________________________________________________________________________________________________________________________________________________________
+
+What is None in Python
+
+None is a special constant in Python that represents the absence of a value or “nothing.”
+
+It is of type NoneType.
+
+Commonly used to indicate no result, empty return, or missing data.
+
+_________________________________________________________________________________________________________________________________________________________________________________________________________________
+
+Function definition: default args, keyword-only args, *args, **kwargs.
+
+Default Arguments
+
+Provide a default value for a parameter.
+
+Used when a value is not passed by the caller.
+
+Keyword-only Arguments
+
+Defined after * in the parameter list.
+
+Must be passed by name, not position.
+
+*args (Variable Positional Arguments)
+
+Collects extra positional arguments into a tuple.
+
+**kwargs (Variable Keyword Arguments)
+
+Collects extra keyword arguments into a dictionary.
+
+_________________________________________________________________________________________________________________________________________________________________________________________________________________
+
+What is a Lambda Function?
+
+A lambda is an anonymous (unnamed), single-line function in Python.
+
+Defined using the keyword lambda instead of def.
+
+_________________________________________________________________________________________________________________________________________________________________________________________________________________
+
+What is OOP?
+
+OOP (Object-Oriented Programming) is a programming paradigm based on the concept of objects — entities that combine data (attributes) and behavior (methods).
+
+It helps make code modular, reusable, and easier to maintain.
+
+Class
+
+A class is a blueprint for creating objects.
+
+Object
+
+An object is an instance of a class — it has real data.
+
+Pillars of OOP
+
+Encapsulation
+
+Binding data and methods together; hiding internal details from outside access.
+
+Inheritance
+
+Allows one class to inherit properties and methods from another.
+
+Polymorphism
+
+Same method name, different behavior depending on the object.
+
+Abstraction
+
+Hiding complex implementation details and exposing only the necessary parts.
+
+_________________________________________________________________________________________________________________________________________________________________________________________________________________
+
+@property and Descriptors in Python
+
+Both @property and descriptors are used for managing access to attributes — e.g., making them read-only, computed, or validated.
+
+Using @property
+
+The @property decorator lets you control access to instance attributes while keeping simple syntax.
+
+Using a Custom Descriptor
+
+A descriptor is a class that manages another class’s attribute using:
+
+__get__(), __set__(), and __delete__() methods.
+
+_________________________________________________________________________________________________________________________________________________________________________________________________________________
+
