@@ -1,0 +1,726 @@
+What is React?
+
+React is a JavaScript library used to build user interfaces. It’s component-based, declarative, and uses a Virtual DOM for fast updates. React lets you create reusable UI components that automatically re-render when data changes.
+
+_________________________________________________________________________________________________________________________________________________________________________________________________________________
+
+What are the main features of React?
+
+JSX: Allows writing HTML-like syntax in JavaScript for easier UI creation.
+
+Components: Breaks the UI into small, reusable pieces.
+
+Virtual DOM: Improves performance by updating only what’s changed.
+
+Unidirectional Data Flow: Data flows one way, making apps easier to debug.
+
+Hooks: Enable state and side effects in functional components.
+
+Declarative UI: You describe the UI, and React updates it automatically.
+
+_________________________________________________________________________________________________________________________________________________________________________________________________________________
+
+What is the difference between React and traditional DOM manipulation?
+
+Traditional DOM: Updates the real DOM directly, which is slow because the DOM is heavy and re-rendering affects performance.
+
+React: Uses a Virtual DOM — a lightweight copy of the real DOM. It compares changes (diffing) and updates only the changed parts efficiently.
+
+_________________________________________________________________________________________________________________________________________________________________________________________________________________
+
+What are components in React?
+
+Components are the building blocks of a React application. They are reusable pieces of UI that can have their own structure, logic, and styling.
+
+There are two main types:
+
+Functional Components: Use functions and Hooks.
+
+Class Components: Use ES6 classes and lifecycle methods (older style).
+
+_________________________________________________________________________________________________________________________________________________________________________________________________________________
+
+What is the difference between functional and class components?
+
+Functional Components:
+
+Defined using JavaScript functions.
+
+Use Hooks (useState, useEffect) for state and lifecycle logic.
+
+Simpler, faster, and preferred in modern React.
+
+Class Components:
+
+Defined using ES6 classes.
+
+Use this.state and lifecycle methods like componentDidMount().
+
+More verbose and now mostly replaced by functional components.
+
+_________________________________________________________________________________________________________________________________________________________________________________________________________________
+
+What is JSX and why is it used?
+
+JSX (JavaScript XML) is a syntax extension for JavaScript that lets you write HTML-like code inside React. It makes UI code easier to read and write.
+
+React uses JSX to create elements that the browser can render after being compiled into JavaScript using tools like Babel.
+
+Why used:
+
+Makes UI structure clearer and more readable.
+
+Allows embedding JavaScript expressions directly inside markup.
+
+Reduces errors by keeping markup and logic together.
+
+_________________________________________________________________________________________________________________________________________________________________________________________________________________
+
+Why do we need to import React in components (in older versions)?
+
+In older React versions (before React 17), JSX code like
+
+const element = <h1>Hello</h1>;
+
+was compiled to
+
+const element = React.createElement('h1', null, 'Hello');
+
+So, React had to be in scope for this to work — that’s why we imported it:
+
+import React from 'react';
+
+_________________________________________________________________________________________________________________________________________________________________________________________________________________
+
+What are props in React?
+
+Props (properties) are read-only inputs passed from a parent component to a child component. They allow data and functions to be shared between components.
+
+Props make components reusable and dynamic, since the same component can display different data.
+
+Key Point: Props are immutable — a child component cannot modify them.
+
+_________________________________________________________________________________________________________________________________________________________________________________________________________________
+
+What is state in React and how is it different from props?
+
+State is a built-in object that stores data inside a component and can change over time. When state changes, the component re-renders automatically.
+
+Difference between State and Props:
+
+Feature					State							Props
+
+Ownership			Managed within the component	Passed from parent
+
+Mutability			Mutable (can change)			Immutable (read-only)
+
+Purpose				Handle dynamic data				Pass data to child components
+
+_________________________________________________________________________________________________________________________________________________________________________________________________________________
+
+Explain the unidirectional data flow in React.
+
+React follows a unidirectional (one-way) data flow, meaning data flows from parent to child through props.
+
+A parent component passes data down, and the child can only read it — not modify it directly. If a child needs to update data, it triggers a callback function provided by the parent.
+
+_________________________________________________________________________________________________________________________________________________________________________________________________________________
+
+What are the different phases of a React component lifecycle?
+
+React class components have three main lifecycle phases:
+
+Mounting – Component is created and inserted into the DOM.
+
+Methods: constructor(), componentDidMount()
+
+Updating – Component re-renders when props or state change.
+
+Methods: componentDidUpdate()
+
+Unmounting – Component is removed from the DOM.
+
+Method: componentWillUnmount()
+
+_________________________________________________________________________________________________________________________________________________________________________________________________________________
+
+What are componentDidMount, componentDidUpdate, and componentWillUnmount used for?
+
+These are React class component lifecycle methods used to perform actions at different stages:
+
+componentDidMount() → Runs once after the component mounts.
+
+→ Used for API calls, event listeners, or DOM updates.
+
+componentDidUpdate(prevProps, prevState) → Runs after every update.
+
+→ Used to respond to prop/state changes (e.g., re-fetch data).
+
+componentWillUnmount() → Runs just before the component unmounts.
+
+→ Used to clean up (e.g., remove event listeners or cancel timers).
+
+_________________________________________________________________________________________________________________________________________________________________________________________________________________
+
+How can you mimic lifecycle methods in functional components using useEffect?
+
+In functional components, the useEffect Hook replaces class lifecycle methods. It runs after every render and can be customized using a dependency array.
+
+_________________________________________________________________________________________________________________________________________________________________________________________________________________
+
+When does useEffect run?
+
+useEffect runs after the component renders (after the DOM is updated). Its timing depends on the dependency array you provide:
+
+_________________________________________________________________________________________________________________________________________________________________________________________________________________
+
+What happens if you don’t provide a dependency array in useEffect?
+
+If you don’t provide a dependency array, the useEffect runs after every render — both on the initial render and every update (when state or props change).
+
+This can cause performance issues or infinite loops if the effect updates state inside it.
+
+_________________________________________________________________________________________________________________________________________________________________________________________________________________
+
+What are React Hooks?
+
+React Hooks are special functions that let you use state and lifecycle features in functional components without writing class components.
+
+✅ Common Hooks:
+
+useState – for managing state.
+
+useEffect – for side effects (API calls, subscriptions).
+
+useRef – for accessing DOM elements or storing mutable values.
+
+useContext – for using context values.
+
+useReducer – for complex state logic.
+
+_________________________________________________________________________________________________________________________________________________________________________________________________________________
+
+Why were hooks introduced?
+
+Hooks were introduced in React 16.8 to make it easier to manage state, lifecycle, and side effects in functional components — without using classes.
+
+Main reasons:
+
+To reuse stateful logic easily (via custom hooks).
+
+To avoid complex class components with confusing this bindings.
+
+To separate logic from UI, making components cleaner and more maintainable.
+
+To make React code more functional and consistent.
+
+_________________________________________________________________________________________________________________________________________________________________________________________________________________
+
+Explain the rules of hooks.
+
+There are two main rules you must follow when using React Hooks:
+
+🧩 Only call Hooks at the top level
+
+Don’t call Hooks inside loops, conditions, or nested functions.
+
+They must run in the same order every time a component renders.
+
+⚛️ Only call Hooks from React functions
+
+You can use Hooks inside functional components or custom hooks — not in regular JavaScript functions or class components.
+
+_________________________________________________________________________________________________________________________________________________________________________________________________________________
+
+What is useState and how do you use it?
+
+useState is a React Hook that lets you add state to functional components. It returns an array with two values — the current state and a function to update it.
+
+const [state, setState] = useState(initialValue);
+
+Key Points:
+
+useState preserves values between renders.
+
+Updating state triggers a re-render.
+
+You can store any data type (number, string, object, array).
+
+_________________________________________________________________________________________________________________________________________________________________________________________________________________
+
+What is useEffect and its purpose?
+
+useEffect is a React Hook used to handle side effects in functional components — things that happen outside the normal UI rendering flow.
+
+Common uses:
+
+Fetching data from APIs
+
+Setting up subscriptions or timers
+
+Updating the DOM manually
+
+Cleaning up (e.g., removing event listeners)
+
+_________________________________________________________________________________________________________________________________________________________________________________________________________________
+
+What is useRef and where would you use it?
+
+useRef is a React Hook that returns a mutable reference object which persists across renders. Updating it doesn’t cause re-renders.
+
+Common uses:
+
+Accessing DOM elements directly.
+
+Storing mutable values (like previous state) without re-rendering.
+
+Managing focus, animations, or timers.
+
+_________________________________________________________________________________________________________________________________________________________________________________________________________________
+
+Explain useContext with an example.
+
+useContext is a React Hook that allows components to access data from a Context without passing props manually through every level (avoids prop drilling).
+
+Steps to use:
+
+Create a Context using createContext().
+
+Wrap components with a Provider to supply the value.
+
+Use useContext() in any child to access that value.
+
+import React, { createContext, useContext } from "react";
+
+const UserContext = createContext();
+
+function Child() {
+  
+  const user = useContext(UserContext);
+  
+  return <h2>Hello, {user}</h2>;
+}
+
+function App() {
+
+  return (
+
+    <UserContext.Provider value="Sarah">
+
+      <Child />
+
+    </UserContext.Provider>
+  );
+}
+
+_________________________________________________________________________________________________________________________________________________________________________________________________________________
+
+Explain Prop Drilling  with an example.
+
+Prop drilling happens when you pass data through multiple layers of components just to reach a deeply nested child — even if the intermediate components don’t need that data.
+
+function App() {
+
+  const user = "Sarah";
+
+  return <Parent user={user} />;
+}
+
+function Parent({ user }) {
+
+  return <Child user={user} />; // Just passing down
+}
+
+function Child({ user }) {
+
+  return <h2>Hello, {user}</h2>;
+
+}
+
+Here, user is passed through Parent even though it doesn’t use it — that’s prop drilling.
+
+How can we solve prop drilling?
+
+Use patterns that let deeply nested components access data directly instead of passing props through every level:
+
+Context API (built-in) — create a Context, provide value at a high level, consume with useContext in any child.
+
+State colocating / lifting up — keep state at the closest common ancestor so fewer components need the prop.
+
+Composition / render props — pass UI as children or functions so only components that need data receive it.
+
+Custom hooks — encapsulate shared logic in a hook and use it where needed (works well with Context).
+
+Global state libraries — Redux, MobX, Zustand for large apps with complex state or cross-cutting concerns.
+
+_________________________________________________________________________________________________________________________________________________________________________________________________________________
+
+What is useMemo and useCallback? What problem do they solve?
+
+Both useMemo and useCallback are React Hooks used to optimize performance by preventing unnecessary re-renders or recalculations.
+
+useMemo
+
+Purpose: Memoizes the result of a computation.
+
+When to use: When you have expensive calculations that shouldn’t re-run unless dependencies change.
+
+const result = useMemo(() => heavyCalculation(data), [data]);
+
+useCallback
+
+Purpose: Memoizes the function itself, so it doesn’t get recreated on every render.
+
+When to use: When passing callback functions to child components that depend on reference equality.
+
+const handleClick = useCallback(() => setCount(c => c + 1), []);
+
+Problem they solve:
+
+Without them, functions or computed values are recreated on every render — causing unnecessary re-renders of child components or performance lag in large apps.
+
+_________________________________________________________________________________________________________________________________________________________________________________________________________________
+
+What are custom hooks and why would you create one?
+
+A custom hook is a reusable function in React that starts with use and lets you share logic between components. It allows you to extract common stateful or side-effect logic from components into a single function.
+
+function useFetch(url) {
+  
+  const [data, setData] = useState(null);
+
+  useEffect(() => {
+  
+  fetch(url)
+
+      .then(res => res.json())
+
+      .then(setData);
+
+  }, [url]);
+
+  return data;
+}
+
+Then use it like this:
+
+const users = useFetch("/api/users");
+
+Why create one:
+
+To reuse logic across multiple components.
+
+To keep components clean and focused on UI.
+
+To encapsulate complex state or effects in one place.
+
+_________________________________________________________________________________________________________________________________________________________________________________________________________________
+
+What is the difference between useMemo and React.memo?
+
+Both help optimize performance, but they work at different levels:
+
+Feature			useMemo										React.memo
+
+Type			Hook										Higher-Order Component (HOC)
+
+Purpose			Memoizes a value or calculation				Memoizes a component
+
+Used for		Avoiding expensive recalculations			Preventing unnecessary re-renders
+
+Where used		Inside a component							Around a component definition
+
+_________________________________________________________________________________________________________________________________________________________________________________________________________________
+
+How does React’s virtual DOM work?
+
+The Virtual DOM (VDOM) is a lightweight copy of the real DOM that React keeps in memory to make UI updates faster and more efficient.
+
+How it works:
+
+When state or props change, React creates a new Virtual DOM tree.
+
+It then compares the new tree with the previous one using a process called diffing.
+
+React finds only the changed elements.
+
+It updates those specific parts in the real DOM (not the whole page).
+
+✅ Example:
+
+If only one item in a list changes, React updates just that item instead of re-rendering the entire list.
+
+_________________________________________________________________________________________________________________________________________________________________________________________________________________
+
+How does React decide when to re-render a component?
+
+React re-renders a component when its state or props change — because these affect what the UI should look like.
+
+Key points:
+
+State change: Calling setState or setCount (in Hooks) triggers a re-render.
+
+Props change: When a parent passes new props, the child re-renders.
+
+Context change: If a component uses a useContext value and it changes, it re-renders.
+
+React then compares the new Virtual DOM with the previous one to update only what changed (using the diffing algorithm).
+
+_________________________________________________________________________________________________________________________________________________________________________________________________________________
+
+What is reconciliation in React?
+
+Reconciliation is the process React uses to compare the new Virtual DOM with the previous one to determine what needs to change in the real DOM.
+
+How it works:
+
+React builds a new Virtual DOM tree when state or props change.
+
+It diffs the new tree with the old one.
+
+React finds the minimum number of changes needed.
+
+Only those changed elements are updated in the real DOM.
+
+✅ Example:
+
+If only one <li> in a list changes, React updates just that item, not the whole list.
+
+_________________________________________________________________________________________________________________________________________________________________________________________________________________
+
+How can you optimize performance in React applications?
+
+Avoid unnecessary re-renders: Use React.memo for pure child components and useCallback / useMemo to keep stable references.
+
+Example: const memoChild = React.memo(Child);
+
+Keep component tree shallow & state colocated: Lift state only where needed; avoid putting state high up if only a small subtree needs it.
+
+Code-splitting / lazy loading: Use React.lazy + Suspense or dynamic import() to split bundles and load routes/components on demand.
+
+Virtualize long lists: Use libraries like react-window/react-virtualized so only visible rows are rendered.
+
+Debounce / throttle expensive updates: Throttle input handlers or expensive effects to reduce frequent re-renders.
+
+Avoid expensive work in render: Move heavy calculations into useMemo or compute outside render; keep render pure and fast.
+
+Use browser optimizations: Let the browser handle expensive layout work (avoid forced synchronous layout), and prefer CSS transforms/opacity for animations.
+
+Efficient reconciliation (keys): Provide stable key props for lists so React can diff correctly: <li key={id}>.
+
+Reduce bundle size: Tree-shake, remove unused libs, compress assets, and use tools like Webpack/Rollup/Terser.
+
+Profiling and measuring: Use React DevTools Profiler and browser performance tools to find actual bottlenecks before optimizing.
+
+_________________________________________________________________________________________________________________________________________________________________________________________________________________
+
+
+<p>{{ "Angular" | reverse }}</p>
+<p>{{ name | reverse }}</p>
+
+<img [src]="imageUrl" />
+<button (click)="increase_count()">Click</button>
+<p>Count : {{ count_event }}</p>
+
+<input type="text" [(ngModel)]="message" />
+<p>{{ message }}</p>
+
+<p>{{ messageFromService }}</p>
+
+<ng-container *ngIf="isLoggedIn">
+  <h3>User List</h3>
+  <ul>
+    @for (user of users; track user) {
+    <li>{{ user }}</li>
+    }
+  </ul>
+</ng-container>
+
+@if (products.length > 0) {
+<p>Products Available</p>
+} @else {
+<p>No products found. Please try later.</p>
+
+}
+
+<h2>Template Driven Form</h2>
+
+<form #userForm="ngForm" (ngSubmit)="submitForm(userForm)">
+  <!-- Name -->
+  <label>Name:</label>
+  <input type="text" name="name" ngModel required #nameRef="ngModel" />
+  <div *ngIf="nameRef.invalid && nameRef.touched" style="color: red">
+    Name is required
+  </div>
+  <br />
+
+  <!-- Email -->
+  <label>Email:</label>
+  <input type="email" name="email" ngModel required email #emailRef="ngModel" />
+  <div *ngIf="emailRef.invalid && emailRef.touched" style="color: red">
+    Enter a valid email
+  </div>
+  <br />
+
+  <!-- Button -->
+  <button type="submit" [disabled]="userForm.invalid">Submit</button>
+</form>
+
+<hr />
+
+<!-- Display Form Value -->
+<p><strong>Form Value:</strong> {{ userForm.value | json }}</p>
+
+<h2>Angular Signal Example</h2>
+
+<h3>Count: {{ count() }}</h3>
+
+<button (click)="increment()">Increment</button>
+<button (click)="decrement()">Decrement</button>
+<button (click)="reset()">Reset</button>
+
+<div class="form-container">
+  <h2>Login Form</h2>
+
+  <form #loginForm="ngForm" (ngSubmit)="onSubmit()">
+    <!-- Email Field -->
+    <div class="form-group">
+      <label for="email">Email:</label>
+      <input
+        type="email"
+        id="email"
+        name="email"
+        [(ngModel)]="user.email"
+        #email="ngModel"
+        required
+        email
+        class="form-control"
+        placeholder="Enter your email"
+      />
+
+      @if (email.invalid && (email.dirty || email.touched)) {
+      <div class="error">
+        @if (email.errors?.['required']) {
+        <span>Email is required</span>
+        } @if (email.errors?.['email']) {
+        <span>Please enter a valid email</span>
+        }
+      </div>
+      }
+    </div>
+
+    <!-- Password Field -->
+    <div class="form-group">
+      <label for="password">Password:</label>
+      <input
+        type="password"
+        id="password"
+        name="password"
+        [(ngModel)]="user.password"
+        #password="ngModel"
+        required
+        minlength="6"
+        class="form-control"
+        placeholder="Enter your password"
+      />
+
+      @if (password.invalid && (password.dirty || password.touched)) {
+      <div class="error">
+        @if (password.errors?.['required']) {
+        <span>Password is required</span>
+        } @if (password.errors?.['minlength']) {
+        <span>Password must be at least 6 characters</span>
+        }
+      </div>
+      }
+    </div>
+
+    <!-- Submit Button -->
+    <button type="submit" class="btn-submit" [disabled]="loginForm.invalid">
+      Login
+    </button>
+  </form>
+
+  <!-- Form Status (Optional for debugging) -->
+  <div class="form-status">
+    <p>Form Valid: {{ loginForm.valid }}</p>
+    <p>Form Values: {{ user | json }}</p>
+  </div>
+</div>
+
+
+
+
+
+import { CommonModule, JsonPipe } from '@angular/common';
+import { Component, signal } from '@angular/core';
+import { FormsModule, NgForm } from '@angular/forms';
+import { RouterOutlet } from '@angular/router';
+import { ReversePipe } from './reverse.pipe';
+import { DataServiceService } from './data-service.service';
+
+@Component({
+  selector: 'app-root',
+  standalone: true,
+  imports: [FormsModule, JsonPipe, CommonModule, ReversePipe],
+  templateUrl: './app.component.html',
+  styleUrl: './app.component.css'
+})
+export class AppComponent{
+
+  messageFromService:string = '';
+
+  constructor(private dataService : DataServiceService){}
+  ngOnInit(){
+  this.messageFromService = this.dataService.getMessage();
+  }
+  title = 'crud-operations';
+
+  name = 'dhamu';
+  imageUrl = 'logo.png';
+
+  isLoggedIn = false;
+  users = ['Mahesh', 'Dhamu', 'Ravi'];
+
+  products: string[] = ["Hii"];
+
+  submitForm(form: NgForm) {
+    console.log('Form Submitted:', form.value);
+
+    
+
+  }
+  message = 'Hello Dhamu';
+  
+  count_event = 0;
+  increase_count(){
+    this.count_event++;
+  }
+  // Creating a signal
+  count = signal(0);
+
+  // Increment function
+  increment() {
+    this.count.update(value => value + 1);
+  }
+
+  // Decrement function
+  decrement() {
+    this.count.update(value => value - 1);
+  }
+
+  // Reset function
+  reset() {
+    this.count.set(0);
+  }
+
+   user = {
+    email: '',
+    password: ''
+  };
+
+  onSubmit() {
+    console.log('Form Submitted!', this.user);
+    // Add your login logic here
+  }
+}
